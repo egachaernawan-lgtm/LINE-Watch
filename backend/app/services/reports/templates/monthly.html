@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% from "macros.html" import section, article_block %}
+{% block title %}LINE WATCH Monthly Report · {{ label }}{% endblock %}
+{% block body %}
+<h1>LINE <span class="g">WATCH</span> · Monthly Report</h1>
+<div class="sub">{{ label }}</div>
+
+<div class="kpis">
+  <div class="kpi"><b>{{ d.total }}</b><span>Total coverage{% if d.prev_total is not none %} (prev. month {{ d.prev_total }}){% endif %}</span></div>
+  <div class="kpi"><b>{{ d.sentiment.POSITIVE }}</b><span>Positive</span></div>
+  <div class="kpi"><b>{{ d.sentiment.NEGATIVE }}</b><span>Negative</span></div>
+  <div class="kpi"><b>{{ (d.share_of_voice | selectattr("company", "equalto", "LINE") | map(attribute="share") | first) or 0 }}%</b><span>LINE share of voice</span></div>
+</div>
+
+<h2>Total Coverage</h2>
+<table><tr>{% for k, v in d.by_category.items() %}<th>{{ k | title }}</th>{% endfor %}</tr>
+<tr>{% for k, v in d.by_category.items() %}<td>{{ v }}</td>{% endfor %}</tr></table>
+{% if charts and charts.daily %}<div class="charts"><img src="{{ charts.daily }}" alt="Daily volume"></div>{% endif %}
+
+<h2>Share of Voice</h2>
+<table><tr><th>Company</th><th>Articles</th><th>Share</th></tr>
+{% for r in d.share_of_voice %}<tr><td>{{ r.company }}</td><td>{{ r.count }}</td><td>{{ r.share }}%</td></tr>{% endfor %}</table>
+{% if charts and charts.sov %}<div class="charts"><img src="{{ charts.sov }}" alt="Share of voice"></div>{% endif %}
+
+<h2>Positive / Negative Coverage</h2>
+<table><tr><th></th><th>Positive</th><th>Neutral</th><th>Negative</th></tr>
+<tr><td>All coverage</td><td>{{ d.sentiment.POSITIVE }}</td><td>{{ d.sentiment.NEUTRAL }}</td><td>{{ d.sentiment.NEGATIVE }}</td></tr>
+<tr><td>LINE only</td><td>{{ d.line_sentiment.POSITIVE }}</td><td>{{ d.line_sentiment.NEUTRAL }}</td><td>{{ d.line_sentiment.NEGATIVE }}</td></tr></table>
+{% if charts and charts.sentiment %}<div class="charts"><img src="{{ charts.sentiment }}" alt="Sentiment" width="260"></div>{% endif %}
+
+<div class="row">
+  <div>
+    <h2>Top Media</h2>
+    <table>{% for m, n in d.top_media %}<tr><td>{{ m }}</td><td>{{ n }}</td></tr>{% endfor %}</table>
+  </div>
+  <div>
+    <h2>Top Topics</h2>
+    <table>{% for t, n in d.top_topics %}<tr><td>{{ t }}</td><td>{{ n }}</td></tr>{% endfor %}</table>
+  </div>
+</div>
+
+<h2>Competitor Comparison</h2>
+<table><tr><th>Company</th><th>Articles</th><th>Share</th><th>Positive</th><th>Neutral</th><th>Negative</th></tr>
+{% for r in d.competitor_table %}<tr><td>{{ r.company }}</td><td>{{ r.total }}</td><td>{{ r.share }}%</td><td>{{ r.positive }}</td><td>{{ r.neutral }}</td><td>{{ r.negative }}</td></tr>{% endfor %}</table>
+
+<h2>Key Trends</h2>
+<table><tr><th>Week</th><th>Articles</th><th>Negative</th></tr>
+{% for w, t, n in d.weekly %}<tr><td>{{ w }}</td><td>{{ t }}</td><td>{{ n }}</td></tr>{% endfor %}</table>
+{% if narrative %}<ul>{% for t in narrative.key_trends %}<li>{{ t }}</li>{% endfor %}</ul>{% endif %}
+
+{{ section("Most Notable Negative Coverage", d.top_negative, tz, "No negative LINE coverage this month.") }}
+{{ section("Most Notable Positive Coverage", d.top_positive, tz, "No positive LINE coverage this month.") }}
+
+<h2>Recommendations</h2>
+{% if narrative %}<ul>{% for t in narrative.recommendations %}<li>{{ t }}</li>{% endfor %}</ul>
+{% else %}<p class="empty">Automatic recommendations were unavailable for this report.</p>{% endif %}
+{% endblock %}

@@ -1,0 +1,8 @@
+:root{
+--shadow-0:none;
+--shadow-1:none;
+--shadow-sticky:0px 2px 8px rgba(0,0,0,0.08);
+--shadow-popover:0px 4px 16px rgba(0,0,0,0.12);
+--shadow-modal:0px 8px 24px rgba(0,0,0,0.16);
+--shadow-sheet:0px -4px 16px rgba(0,0,0,0.1);
+}

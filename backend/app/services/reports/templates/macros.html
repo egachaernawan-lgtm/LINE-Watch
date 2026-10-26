@@ -1,0 +1,18 @@
+{% macro article_block(a, tz) %}
+<div class="article">
+  <div class="headline"><a href="{{ a.url }}">{{ a.headline }}</a></div>
+  <div class="meta">
+    {{ a.media_name }} · {{ (a.published_at or a.collected_at) | localtime(tz) }}
+    · <span class="s-{{ (a.sentiment.value if a.sentiment else 'none') | lower }}">{{ a.sentiment.value | title if a.sentiment else 'Not analysed' }}</span>
+    {% if a.importance %}· Importance: {{ a.importance.value | title }}{% endif %}
+  </div>
+  {% if a.summary %}<ul>{% for s in a.summary %}<li>{{ s }}</li>{% endfor %}</ul>{% endif %}
+  <div class="source">Original Source: <a href="{{ a.url }}">{{ a.url }}</a></div>
+</div>
+{% endmacro %}
+
+{% macro section(title, articles, tz, empty="No coverage in this period.") %}
+<h2>{{ title }} <span class="count">{{ articles | length }}</span></h2>
+{% for a in articles %}{{ article_block(a, tz) }}{% else %}<p class="empty">{{ empty }}</p>{% endfor %}
+{% endmacro %}
+

@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+node_modules/
+.next/
+.env
+.env.local
+*.pyc
+backend/.pytest_cache/
+tsconfig.tsbuildinfo
+.claude/settings.local.json

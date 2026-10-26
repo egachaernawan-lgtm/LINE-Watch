@@ -1,0 +1,8 @@
+:root{
+--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;
+--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;
+--margin-mobile-s:16px;--margin-mobile:20px;
+--list-pad-y:16px;--list-pad-x:20px;
+--avatar-size:48px;
+--bp-mobile-l:360px;/* @kind other */--bp-tablet:600px;/* @kind other */--bp-desktop:1024px;/* @kind other */
+}

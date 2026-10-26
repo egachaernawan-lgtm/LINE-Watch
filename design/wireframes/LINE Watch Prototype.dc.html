@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/line-watch-design-system-35397fb8-85a0-4e3e-9455-231170474121/styles.css">
+<script src="_ds/line-watch-design-system-35397fb8-85a0-4e3e-9455-231170474121/_ds_bundle.js"></script>
+<style>body{margin:0;background:#F4F4F4;font-family:var(--font-sans);color:#111}a{color:#007AFF;text-decoration:none}a:hover{text-decoration:underline}*{box-sizing:border-box}</style>
+</helmet>
+
+<sc-if value="{{ s.setup }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Set up" style="min-height:100vh;background:#F4F4F4;display:flex;flex-direction:column;align-items:center;padding:48px 32px;gap:24px">
+<div style="font:800 22px/1 var(--font-sans);color:#111">LINE <span style="color:#06C755">Watch</span></div>
+<div style="width:100%;max-width:1040px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:24px;align-items:start">
+<div style="background:#fff;border:1px solid #EBEBEB;border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:4px"><div style="font:800 28px/1.4 var(--font-sans)">Set up monitoring</div><div style="font:400 16px/1.5 var(--font-sans);color:#555">You can change any of this later in Settings.</div></div>
+<div style="display:flex;flex-direction:column;gap:8px"><div style="font:700 14px/1.5 var(--font-sans)">Keywords</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{ keywordChips }}" as="k" hint-placeholder-count="2"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Tag" tone="neutral" on-remove="{{ k.remove }}" hint-size="auto,28px">{{ k.label }}</x-import></sc-for></div>
+<x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Input" icon="plus" placeholder="Type a keyword and press Enter" value="{{ kwDraft }}" on-change="{{ onKwChange }}" on-key-down="{{ onKwKey }}" helper="Brand names, people, products or topics" hint-size="100%,72px"></x-import></div>
+<div style="display:flex;flex-direction:column;gap:12px"><div style="font:700 14px/1.5 var(--font-sans)">Sources</div>
+<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px"><sc-for list="{{ sourceOpts }}" as="o" hint-placeholder-count="4"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Checkbox" checked="{{ o.on }}" on-change="{{ o.toggle }}" label="{{ o.label }}" hint-size="auto,24px"></x-import></sc-for></div></div>
+<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px">
+<x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Select" label="Language" options="{{ langOpts }}" hint-size="100%,72px"></x-import>
+<x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Select" label="Region" options="{{ regionOpts }}" hint-size="100%,72px"></x-import></div>
+<div style="display:flex;gap:12px;align-items:center"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Button" disabled="{{ setupDisabled }}" on-click="{{ go.home }}" hint-size="180px,48px">Start monitoring</x-import><span style="font:400 14px/1.5 var(--font-sans);color:#888">{{ setupHint }}</span></div>
+</div>
+<div style="background:#fff;border:1px solid #EBEBEB;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:16px;position:sticky;top:24px">
+<div style="font:400 14px/1.5 var(--font-sans);color:#555">Preview · last 7 days</div>
+<div style="display:flex;align-items:baseline;gap:8px"><span style="font:800 32px/1.2 var(--font-sans);font-variant-numeric:tabular-nums">{{ previewPerDay }}</span><span style="font:400 14px/1.5 var(--font-sans);color:#888">mentions/day</span></div>
+<x-import component-from-global-scope="LINEWatchDesignSystem_35397f.SentimentBar" positive="{{ 22 }}" neutral="{{ 41 }}" mixed="{{ 9 }}" negative="{{ 28 }}" hint-size="100%,40px"></x-import>
+<div style="font:700 14px/1.5 var(--font-sans);margin-top:4px">Sample mentions</div>
+<div style="margin:0 -24px"><sc-for list="{{ previewMentions }}" as="m" hint-placeholder-count="3"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.ListRow" avatar="{{ m.source }}" title="{{ m.headline }}" subtitle="{{ m.sub }}" hint-size="100%,72px"></x-import></sc-for></div>
+<div style="font:400 12px/1.4 var(--font-sans);color:#888">Updates as you edit keywords and sources.</div>
+</div></div></div>
+</sc-if>
+
+<sc-if value="{{ s.app }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;height:100vh;overflow:hidden">
+<nav style="width:240px;flex:none;background:#fff;border-right:1px solid #EBEBEB;display:flex;flex-direction:column;padding:20px 12px;gap:4px">
+<div style="font:800 20px/1 var(--font-sans);padding:4px 12px 24px">LINE <span style="color:#06C755">Watch</span></div>
+<sc-for list="{{ nav }}" as="n" hint-placeholder-count="5"><div onClick="{{ n.onClick }}" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;cursor:pointer;font:700 15px/1.4 var(--font-sans);background:{{ n.bg }};color:{{ n.fg }};transition:background 120ms" style-hover="background:rgba(0,0,0,.05)"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Icon" name="{{ n.icon }}" size="{{ 20 }}" hint-size="20px,20px"></x-import><span style="flex:1">{{ n.label }}</span><sc-if value="{{ n.count }}" hint-placeholder-val="{{ false }}"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Badge" variant="neutral" count="{{ n.count }}" hint-size="20px,18px"></x-import></sc-if></div></sc-for>
+<div style="margin-top:auto;display:flex;align-items:center;gap:10px;padding:12px;border-top:1px solid #EBEBEB"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Avatar" name="Aiko Tanaka" size="{{ 32 }}" hint-size="32px,32px"></x-import><div style="display:flex;flex-direction:column"><span style="font:700 14px/1.4 var(--font-sans)">Aiko Tanaka</span><span style="font:400 12px/1.4 var(--font-sans);color:#888">Comms team</span></div></div>
+</nav>
+<main ref="{{ mainRef }}" style="flex:1;min-width:0;overflow:auto;display:flex;flex-direction:column">
+<header style="position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid #EBEBEB;height:64px;flex:none;display:flex;align-items:center;gap:16px;padding:0 32px">
+<sc-if value="{{ backLink }}" hint-placeholder-val="{{ false }}"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.IconButton" icon="arrow-left" label="Back" size="sm" on-click="{{ backLink }}" hint-size="32px,32px"></x-import></sc-if>
+<div style="font:700 20px/1.4 var(--font-sans);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ pageTitle }}</div>
+<div style="width:320px"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Input" icon="search" size="sm" placeholder="Search mentions" value="{{ searchDraft }}" on-change="{{ onSearchChange }}" on-key-down="{{ onSearchKey }}" hint-size="100%,38px"></x-import></div>
+<x-import component-from-global-scope="LINEWatchDesignSystem_35397f.IconButton" icon="bell" label="Notifications" badge="{{ 2 }}" hint-size="40px,40px"></x-import>
+</header>
+<div style="padding:32px;display:flex;flex-direction:column;gap:24px;flex:1">
+
+<sc-if value="{{ s.home }}" hint-placeholder-val="{{ true }}">
+<div data-screen-label="Home" style="display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Tabs" variant="segmented" items="{{ rangeItems }}" value="{{ range }}" on-change="{{ setRange }}" hint-size="220px,40px"></x-import><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Button" icon="bell-plus" on-click="{{ alertFromHome }}" hint-size="160px,48px">Create alert</x-import></div>
+<sc-if value="{{ showSpikeBanner }}" hint-placeholder-val="{{ true }}"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Banner" tone="warning" title="Negative coverage is up 3× since Thursday 14:00" hint-size="100%,64px">Most of it is tied to the "Earnings miss" narrative. <a href="#" onClick="{{ openSpike }}">View the spike</a></x-import></sc-if>
+<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px"><sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4"><div onClick="{{ k.onClick }}" style="cursor:pointer;border-radius:16px;transition:box-shadow 200ms" style-hover="box-shadow:0 4px 16px rgba(0,0,0,.12)"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.StatTile" label="{{ k.label }}" value="{{ k.value }}" delta="{{ k.delta }}" delta-label="vs last period" invert="{{ k.invert }}" icon="{{ k.icon }}" hint-size="100%,132px"></x-import></div></sc-for></div>
+<div style="background:#fff;border:1px solid #EBEBEB;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><div style="font:700 18px/1.4 var(--font-sans)">Volume</div><span style="font:400 12px/1.4 var(--font-sans);color:#888">Mentions per 6 hours · click the spike to see what caused it</span></div>
+<div style="position:relative;height:200px"><svg viewBox="0 0 1000 200" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible"><path d="{{ volArea }}" fill="rgba(6,199,85,.1)"></path><path d="{{ volLine }}" fill="none" stroke="#06C755" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linejoin="round"></path></svg>
+<button onClick="{{ openSpike }}" title="View spike" style="position:absolute;left:{{ spikeX }};top:{{ spikeY }};transform:translate(-50%,-50%);width:18px;height:18px;border-radius:50%;background:#FF334B;border:3px solid #fff;box-shadow:0 0 0 1px #FF334B,0 4px 16px rgba(0,0,0,.12);cursor:pointer;padding:0"></button>
+<div style="position:absolute;left:{{ spikeX }};top:0;transform:translate(12px,-4px);font:700 12px/1.4 var(--font-sans);color:#FF334B;white-space:nowrap">Thu 14:00 · 560</div></div>
+<div style="display:flex;justify-content:space-between;font:400 12px/1.4 var(--font-sans);color:#888"><sc-for list="{{ dayLabels }}" as="d" hint-placeholder-count="7"><span>{{ d }}</span></sc-for></div>
+</div>
+<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start">
+<div style="background:#fff;border:1px solid #EBEBEB;border-radius:16px;overflow:hidden"><div style="display:flex;justify-content:space-between;align-items:center;padding:20px 20px 8px"><div style="font:700 18px/1.4 var(--font-sans)">Top narratives</div><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Button" variant="link" size="sm" on-click="{{ go.narratives }}" hint-size="80px,30px">View all</x-import></div>
+<sc-for list="{{ topNarratives }}" as="n" hint-placeholder-count="3"><div onClick="{{ n.open }}" style="padding:14px 20px;display:flex;flex-direction:column;gap:8px;cursor:pointer;border-top:1px solid #EBEBEB" style-hover="background:rgba(0,0,0,.05)"><div style="display:flex;justify-content:space-between;gap:12px"><span style="font:700 16px/1.5 var(--font-sans)">{{ n.name }}</span><span style="font:400 14px/1.5 var(--font-sans);color:#888">{{ n.countLabel }} · {{ n.delta }}</span></div><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.SentimentBar" positive="{{ n.split.positive }}" neutral="{{ n.split.neutral }}" mixed="{{ n.split.mixed }}" negative="{{ n.split.negative }}" show-legend="{{ false }}" height="{{ 6 }}" hint-size="100%,6px"></x-import></div></sc-for></div>
+<div style="background:#fff;border:1px solid #EBEBEB;border-radius:16px;overflow:hidden"><div style="display:flex;justify-content:space-between;align-items:center;padding:20px 20px 8px;border-bottom:1px solid #EBEBEB"><div style="font:700 18px/1.4 var(--font-sans)">Latest mentions</div><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Button" variant="link" size="sm" on-click="{{ go.feed }}" hint-size="80px,30px">View feed</x-import></div>
+<sc-for list="{{ latest }}" as="m" hint-placeholder-count="3"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.MentionItem" source="{{ m.source }}" medium="{{ m.medium }}" time="{{ m.time }}" headline="{{ m.headline }}" sentiment="{{ m.sentiment }}" on-click="{{ m.open }}" hint-size="100%,110px"></x-import></sc-for></div>
+</div></div>
+</sc-if>
+
+<sc-if value="{{ s.feed }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Media feed" style="display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+<sc-for list="{{ chips }}" as="c" hint-placeholder-count="1"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Tag" selected="{{ true }}" on-remove="{{ c.remove }}" hint-size="auto,28px">{{ c.label }}</x-import></sc-for>
+<div style="width:150px"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Select" size="sm" variant="outline" options="{{ toneOpts }}" value="{{ f.tone }}" on-change="{{ setTone }}" hint-size="100%,38px"></x-import></div>
+<div style="width:170px"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Select" size="sm" variant="outline" options="{{ mediumOpts }}" value="{{ f.medium }}" on-change="{{ setMedium }}" hint-size="100%,38px"></x-import></div>
+<div style="width:200px"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Select" size="sm" variant="outline" options="{{ narrOpts }}" value="{{ f.narrative }}" on-change="{{ setNarrFilter }}" hint-size="100%,38px"></x-import></div>
+<span style="flex:1"></span>
+<sc-if value="{{ hasFilters }}" hint-placeholder-val="{{ false }}"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Button" variant="tertiary" size="sm" on-click="{{ clearFilters }}" hint-size="80px,32px">Clear all</x-import></sc-if>
+<x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Button" variant="secondary" size="sm" icon="bookmark" on-click="{{ saveSearch }}" hint-size="130px,32px">Save search</x-import>
+<x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Button" variant="secondary" size="sm" icon="download" on-click="{{ exportCsv }}" hint-size="120px,32px">Export CSV</x-import>
+</div>
+<div style="background:#fff;border:1px solid #EBEBEB;border-radius:16px;overflow:hidden">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid #EBEBEB;font:400 14px/1.5 var(--font-sans);color:#555"><span><b style="color:#111">{{ feedCount }}</b> mentions</span><span>Newest first</span></div>
+<sc-for list="{{ feed }}" as="m" hint-placeholder-count="5"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.MentionItem" source="{{ m.source }}" medium="{{ m.medium }}" time="{{ m.time }}" headline="{{ m.headline }}" excerpt="{{ m.excerpt }}" sentiment="{{ m.sentiment }}" narrative="{{ m.narrative }}" reach="{{ m.reach }}" on-click="{{ m.open }}" hint-size="100%,140px"></x-import></sc-for>
+<sc-if value="{{ feedEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:48px 20px;text-align:center;font:400 16px/1.5 var(--font-sans);color:#888">No mentions match these filters.</div></sc-if>
+</div></div>
+</sc-if>
+
+<sc-if value="{{ s.mention }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Mention detail" style="display:flex;flex-direction:column;gap:20px;max-width:1100px">
+<div style="display:flex;align-items:center;gap:8px;font:400 14px/1.5 var(--font-sans);color:#888"><span>{{ mPos }}</span><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.IconButton" icon="chevron-left" label="Previous mention" size="sm" variant="outline" on-click="{{ mPrev }}" hint-size="32px,32px"></x-import><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.IconButton" icon="chevron-right" label="Next mention" size="sm" variant="outline" on-click="{{ mNext }}" hint-size="32px,32px"></x-import><span style="flex:1"></span><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Button" variant="secondary" size="sm" icon-right="arrow-up-right" hint-size="140px,32px">Open source</x-import><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Button" size="sm" icon="{{ addIcon }}" disabled="{{ mAdded }}" on-click="{{ addToReport }}" hint-size="140px,32px">{{ addLabel }}</x-import></div>
+<div style="display:flex;flex-direction:column;gap:10px"><div style="font:800 28px/1.4 var(--font-sans);text-wrap:pretty">{{ m.headline }}</div>
+<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;font:400 14px/1.5 var(--font-sans);color:#555"><b style="color:#111">{{ m.source }}</b><span>· {{ m.medium }} · {{ m.time }} · {{ m.reach }} reach</span><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Tag" tone="{{ m.sentiment }}" dot="{{ true }}" hint-size="auto,26px">{{ m.toneLabel }}</x-import><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Tag" tone="outline" icon="waypoints" on-click="{{ mOpenNarr }}" hint-size="auto,26px">{{ m.narrative }}</x-import></div>
+<div style="font:400 16px/1.5 var(--font-sans);color:#555;max-width:760px">{{ m.excerpt }}</div></div>
+<div style="background:#fff;border:1px solid #EBEBEB;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><div style="font:700 18px/1.4 var(--font-sans)">Pick-up · first 24 hours</div><span style="font:400 14px/1.5 var(--font-sans);color:#888">{{ pickupSummary }}</span></div>
+<div style="position:relative;height:56px"><div style="position:absolute;left:0;right:0;top:20px;height:2px;background:#EBEBEB;border-radius:2px"></div>
+<sc-for list="{{ pickups }}" as="p" hint-placeholder-count="5"><div title="{{ p.label }}" style="position:absolute;left:{{ p.x }};top:12px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px"><span style="width:18px;height:18px;border-radius:50%;background:{{ p.color }};border:3px solid #fff;box-shadow:0 0 0 1px {{ p.color }}"></span><span style="font:400 12px/1.4 var(--font-sans);color:#888;white-space:nowrap">{{ p.delay }}</span></div></sc-for></div></div>
+<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start">
+<div style="background:#fff;border:1px solid #EBEBEB;border-radius:16px;overflow:hidden"><div style="font:700 18px/1.4 var(--font-sans);padding:20px 20px 8px">Picked up by</div><sc-for list="{{ pickupRows }}" as="p" hint-placeholder-count="4"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.ListRow" avatar="{{ p.source }}" title="{{ p.source }}" subtitle="{{ p.medium }}" meta="{{ p.delay }}" hint-size="100%,72px"></x-import></sc-for></div>
+<div style="background:#fff;border:1px solid #EBEBEB;border-radius:16px;overflow:hidden"><div style="font:700 18px/1.4 var(--font-sans);padding:20px 20px 8px;border-bottom:1px solid #EBEBEB">Similar coverage</div><sc-for list="{{ similar }}" as="x" hint-placeholder-count="3"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.MentionItem" source="{{ x.source }}" medium="{{ x.medium }}" time="{{ x.time }}" headline="{{ x.headline }}" sentiment="{{ x.sentiment }}" on-click="{{ x.open }}" hint-size="100%,110px"></x-import></sc-for></div>
+</div></div>
+</sc-if>
+
+<sc-if value="{{ s.narratives }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Narratives" style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start">
+<div style="flex:1 1 420px;min-width:0;display:flex;flex-direction:column;gap:16px">
+<x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Tabs" variant="segmented" items="{{ narrViewItems }}" value="{{ narrView }}" on-change="{{ setNarrView }}" hint-size="160px,40px"></x-import>
+<sc-if value="{{ isMap }}" hint-placeholder-val="{{ true }}"><div style="background:#fff;border:1px solid #EBEBEB;border-radius:16px;padding:16px"><div style="position:relative;aspect-ratio:16/10;background:#F4F4F4;border-radius:12px;overflow:hidden">
+<sc-for list="{{ bubbles }}" as="b" hint-placeholder-count="5"><div onClick="{{ b.select }}" style="position:absolute;left:{{ b.x }};top:{{ b.y }};width:{{ b.size }};aspect-ratio:1;box-sizing:border-box;overflow:hidden;border-radius:50%;background:{{ b.bg }};border:{{ b.border }};display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 4px;cursor:pointer;container-type:inline-size;transition:box-shadow 200ms" style-hover="box-shadow:0 4px 16px rgba(0,0,0,.12)"><span style="font:700 clamp(9px,11cqw,14px)/1.25 var(--font-sans);color:#111">{{ b.name }}</span><span style="font:400 clamp(8px,9cqw,12px)/1.3 var(--font-sans);color:#555">{{ b.count }}</span></div></sc-for>
+<div style="position:absolute;left:16px;bottom:12px;font:400 12px/1.4 var(--font-sans);color:#888">Size = volume · colour = dominant tone · closer = shared outlets</div></div></div></sc-if>
+<sc-if value="{{ isList }}" hint-placeholder-val="{{ false }}"><div style="background:#fff;border:1px solid #EBEBEB;border-radius:16px;overflow:hidden"><sc-for list="{{ narrList }}" as="n" hint-placeholder-count="5"><div onClick="{{ n.select }}" style="display:grid;grid-template-columns:minmax(0,1fr) 200px 80px;gap:20px;align-items:center;padding:16px 20px;border-bottom:1px solid #EBEBEB;cursor:pointer;background:{{ n.bg }}" style-hover="background:rgba(0,0,0,.05)"><div style="display:flex;flex-direction:column"><span style="font:700 16px/1.5 var(--font-sans)">{{ n.name }}</span><span style="font:400 14px/1.5 var(--font-sans);color:#888">{{ n.countLabel }} · {{ n.outlets }} outlets</span></div><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.SentimentBar" positive="{{ n.split.positive }}" neutral="{{ n.split.neutral }}" mixed="{{ n.split.mixed }}" negative="{{ n.split.negative }}" show-legend="{{ false }}" height="{{ 6 }}" hint-size="100%,6px"></x-import><span style="font:700 14px/1.5 var(--font-sans);text-align:right;color:{{ n.deltaColor }}">{{ n.delta }}</span></div></sc-for></div></sc-if>
+</div>
+<div style="flex:1 1 280px;max-width:380px;background:#fff;border:1px solid #EBEBEB;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:16px;position:sticky;top:96px">
+<div style="display:flex;flex-direction:column;gap:2px"><div style="font:700 20px/1.4 var(--font-sans)">{{ nSel.name }}</div><div style="font:400 14px/1.5 var(--font-sans);color:#888">{{ nSel.countLabel }} · {{ nSel.delta }} · {{ nSel.outlets }} outlets</div></div>
+<x-import component-from-global-scope="LINEWatchDesignSystem_35397f.SentimentBar" positive="{{ nSel.split.positive }}" neutral="{{ nSel.split.neutral }}" mixed="{{ nSel.split.mixed }}" negative="{{ nSel.split.negative }}" hint-size="100%,40px"></x-import>
+<div style="display:flex;flex-direction:column;gap:8px"><div style="font:700 14px/1.5 var(--font-sans)">Key phrases</div><div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ nSel.phrases }}" as="p" hint-placeholder-count="3"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Tag" hint-size="auto,26px">{{ p }}</x-import></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:8px"><div style="font:700 14px/1.5 var(--font-sans)">Top voices</div><div style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{ nSel.voices }}" as="v" hint-placeholder-count="3"><div style="display:flex;align-items:center;gap:6px;font:400 14px/1.5 var(--font-sans)"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Avatar" name="{{ v }}" size="{{ 28 }}" square="{{ true }}" hint-size="28px,28px"></x-import>{{ v }}</div></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:8px"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Button" full-width="{{ true }}" on-click="{{ narrViewFeed }}" hint-size="100%,48px">View coverage</x-import><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Button" variant="secondary" full-width="{{ true }}" icon="bell-plus" on-click="{{ alertFromNarr }}" hint-size="100%,48px">Create alert</x-import></div>
+</div></div>
+</sc-if>
+
+<sc-if value="{{ s.alerts }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Alerts" style="display:flex;flex-direction:column;gap:16px;max-width:900px">
+<div style="display:flex;justify-content:space-between;align-items:center"><span style="font:400 16px/1.5 var(--font-sans);color:#555">You're notified when a rule is met.</span><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Button" icon="plus" on-click="{{ alertBlank }}" hint-size="150px,48px">Create alert</x-import></div>
+<div style="background:#fff;border:1px solid #EBEBEB;border-radius:16px;overflow:hidden"><sc-for list="{{ alertRows }}" as="a" hint-placeholder-count="3"><div style="display:flex;align-items:center;gap:16px;padding:16px 20px;border-bottom:1px solid #EBEBEB"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Icon" name="bell" size="{{ 20 }}" color="#888" hint-size="20px,20px"></x-import><div style="flex:1;min-width:0;display:flex;flex-direction:column"><span style="font:700 16px/1.5 var(--font-sans)">{{ a.name }}</span><span style="font:400 14px/1.5 var(--font-sans);color:#888">{{ a.rule }}</span></div><sc-if value="{{ a.isNew }}" hint-placeholder-val="{{ false }}"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Badge" variant="new" hint-size="36px,18px">NEW</x-import></sc-if><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Switch" checked="{{ a.on }}" on-change="{{ a.toggle }}" hint-size="44px,26px"></x-import></div></sc-for></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s.alertNew }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Create alert" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,380px);gap:20px;align-items:start;max-width:1100px">
+<div style="background:#fff;border:1px solid #EBEBEB;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:20px">
+<div style="display:flex;flex-direction:column;gap:6px"><div style="font:700 14px/1.5 var(--font-sans)">Scope</div><div style="display:flex;gap:8px;flex-wrap:wrap"><sc-for list="{{ scopeOpts }}" as="o" hint-placeholder-count="3"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Tag" tone="outline" selected="{{ o.on }}" on-click="{{ o.pick }}" hint-size="auto,28px">{{ o.label }}</x-import></sc-for></div></div>
+<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px">
+<x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Select" label="When" options="{{ metricOpts }}" value="{{ af.metric }}" on-change="{{ af.setMetric }}" hint-size="100%,72px"></x-import>
+<x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Select" label="Rises above" options="{{ thrOpts }}" value="{{ af.threshold }}" on-change="{{ af.setThreshold }}" hint-size="100%,72px"></x-import>
+<x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Select" label="Within" options="{{ winOpts }}" value="{{ af.window }}" on-change="{{ af.setWindow }}" hint-size="100%,72px"></x-import>
+<x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Input" label="Alert name" value="{{ af.name }}" on-change="{{ af.setName }}" hint-size="100%,72px"></x-import></div>
+<div style="display:flex;flex-direction:column;gap:10px"><div style="font:700 14px/1.5 var(--font-sans)">Notify via</div><div style="display:flex;gap:24px"><sc-for list="{{ channelOpts }}" as="c" hint-placeholder-count="3"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Checkbox" checked="{{ c.on }}" on-change="{{ c.toggle }}" label="{{ c.label }}" hint-size="auto,24px"></x-import></sc-for></div><sc-if value="{{ af.err }}" hint-placeholder-val="{{ false }}"><span style="font:400 12px/1.4 var(--font-sans);color:#FF334B">Choose at least one channel.</span></sc-if></div>
+<div style="display:flex;gap:8px"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Button" on-click="{{ af.save }}" hint-size="130px,48px">Save alert</x-import><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Button" variant="secondary" on-click="{{ af.cancel }}" hint-size="100px,48px">Cancel</x-import></div>
+</div>
+<div style="background:#fff;border:1px solid #EBEBEB;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:12px;position:sticky;top:96px">
+<span style="font:400 14px/1.5 var(--font-sans);color:#555">In the last 30 days this alert would have fired</span>
+<span style="font:800 32px/1.2 var(--font-sans);font-variant-numeric:tabular-nums">{{ af.firesLabel }}</span>
+<div style="position:relative;height:150px"><svg viewBox="0 0 1000 200" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%"><path d="{{ volArea }}" fill="rgba(6,199,85,.1)"></path><path d="{{ volLine }}" fill="none" stroke="#06C755" stroke-width="2" vector-effect="non-scaling-stroke"></path></svg><div style="position:absolute;left:0;right:0;top:{{ af.thrY }};border-top:2px dashed #FF334B;transition:top 200ms cubic-bezier(.2,0,0,1)"></div><span style="position:absolute;right:0;top:{{ af.thrY }};transform:translateY(-120%);font:700 12px/1.4 var(--font-sans);color:#FF334B">{{ af.threshold }}</span></div>
+<span style="font:400 12px/1.4 var(--font-sans);color:#888">{{ af.hint }}</span>
+</div></div>
+</sc-if>
+
+<sc-if value="{{ s.reports }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Reports" style="display:grid;grid-template-columns:240px minmax(0,1fr);gap:20px;align-items:start">
+<div style="background:#fff;border:1px solid #EBEBEB;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:8px;position:sticky;top:96px">
+<div style="font:700 14px/1.5 var(--font-sans);padding:0 4px 4px">Add block</div>
+<sc-for list="{{ palette }}" as="p" hint-placeholder-count="6"><div onClick="{{ p.add }}" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #EBEBEB;border-radius:8px;cursor:pointer;font:700 14px/1.4 var(--font-sans)" style-hover="background:rgba(0,0,0,.05)"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Icon" name="{{ p.icon }}" size="{{ 18 }}" color="#555" hint-size="18px,18px"></x-import><span style="flex:1">{{ p.label }}</span><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Icon" name="plus" size="{{ 16 }}" color="#888" hint-size="16px,16px"></x-import></div></sc-for>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;align-items:center">
+<div style="display:flex;justify-content:space-between;align-items:center;align-self:stretch;gap:12px"><span style="font:400 14px/1.5 var(--font-sans);color:#555">{{ reportMeta }}</span><div style="display:flex;gap:8px"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Button" variant="secondary" size="sm" icon="calendar-clock" on-click="{{ scheduleReport }}" hint-size="120px,32px">Schedule</x-import><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Button" size="sm" icon="download" on-click="{{ exportPdf }}" hint-size="130px,32px">Export PDF</x-import></div></div>
+<div style="width:100%;max-width:760px;background:#fff;border:1px solid #EBEBEB;border-radius:16px;padding:40px;display:flex;flex-direction:column;gap:20px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
+<div style="display:flex;flex-direction:column;gap:2px"><div style="font:800 24px/1.4 var(--font-sans)">{{ reportTitle }}</div><div style="font:400 14px/1.5 var(--font-sans);color:#888">Oct 16–22, 2026 · Prepared by Aiko Tanaka</div></div>
+<sc-for list="{{ blocks }}" as="b" hint-placeholder-count="3"><div style="position:relative;border:1px dashed transparent;border-radius:12px;padding:12px;margin:-12px" style-hover="border-color:#CCCCCC">
+<div style="position:absolute;top:6px;right:6px;z-index:2"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.IconButton" icon="x" label="Remove block" size="sm" on-click="{{ b.remove }}" hint-size="32px,32px"></x-import></div>
+<div style="font:700 16px/1.5 var(--font-sans);margin-bottom:10px">{{ b.label }}</div>
+<sc-if value="{{ b.isKpi }}" hint-placeholder-val="{{ false }}"><div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px"><sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4"><div style="background:#F4F4F4;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:2px"><span style="font:400 12px/1.4 var(--font-sans);color:#555">{{ k.label }}</span><span style="font:800 20px/1.2 var(--font-sans);font-variant-numeric:tabular-nums">{{ k.value }}</span></div></sc-for></div></sc-if>
+<sc-if value="{{ b.isVolume }}" hint-placeholder-val="{{ false }}"><div style="height:120px;position:relative"><svg viewBox="0 0 1000 200" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%"><path d="{{ volArea }}" fill="rgba(6,199,85,.1)"></path><path d="{{ volLine }}" fill="none" stroke="#06C755" stroke-width="2" vector-effect="non-scaling-stroke"></path></svg></div></sc-if>
+<sc-if value="{{ b.isTone }}" hint-placeholder-val="{{ false }}"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.SentimentBar" positive="{{ 22 }}" neutral="{{ 41 }}" mixed="{{ 9 }}" negative="{{ 28 }}" hint-size="100%,40px"></x-import></sc-if>
+<sc-if value="{{ b.isNarr }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:10px"><sc-for list="{{ topNarratives }}" as="n" hint-placeholder-count="3"><div style="display:grid;grid-template-columns:180px minmax(0,1fr) 60px;gap:12px;align-items:center;font:400 14px/1.5 var(--font-sans)"><b>{{ n.name }}</b><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.SentimentBar" positive="{{ n.split.positive }}" neutral="{{ n.split.neutral }}" mixed="{{ n.split.mixed }}" negative="{{ n.split.negative }}" show-legend="{{ false }}" height="{{ 6 }}" hint-size="100%,6px"></x-import><span style="text-align:right;color:#555">{{ n.delta }}</span></div></sc-for></div></sc-if>
+<sc-if value="{{ b.isMentions }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;border-top:1px solid #EBEBEB"><sc-for list="{{ savedRows }}" as="m" hint-placeholder-count="2"><div style="display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid #EBEBEB"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Avatar" name="{{ m.source }}" size="{{ 32 }}" square="{{ true }}" hint-size="32px,32px"></x-import><div style="flex:1;min-width:0;display:flex;flex-direction:column"><span style="font:700 14px/1.5 var(--font-sans)">{{ m.headline }}</span><span style="font:400 12px/1.4 var(--font-sans);color:#888">{{ m.source }} · {{ m.medium }} · {{ m.time }}</span></div><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Tag" tone="{{ m.sentiment }}" dot="{{ true }}" hint-size="auto,26px">{{ m.toneLabel }}</x-import></div></sc-for><sc-if value="{{ savedEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:16px 0;font:400 14px/1.5 var(--font-sans);color:#888">No saved mentions yet. Use "Add to report" on a mention.</div></sc-if></div></sc-if>
+<sc-if value="{{ b.isNote }}" hint-placeholder-val="{{ false }}"><div contenteditable="true" style="font:400 16px/1.5 var(--font-sans);color:#555;background:#F4F4F4;border-radius:8px;padding:12px;outline:none">Negative coverage peaked Thursday after the Q3 results. Pick-up was led by wire services; no broadcast follow-up so far.</div></sc-if>
+</div></sc-for>
+<sc-if value="{{ blocksEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:40px;border:1.5px dashed #CCCCCC;border-radius:12px;text-align:center;font:400 14px/1.5 var(--font-sans);color:#888">Add a block from the left to start this report.</div></sc-if>
+</div></div></div>
+</sc-if>
+
+</div></main></div>
+</sc-if>
+
+<sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}"><div style="position:fixed;left:50%;bottom:32px;transform:translateX(-50%);z-index:200"><x-import component-from-global-scope="LINEWatchDesignSystem_35397f.Toast" tone="success" action="{{ toast.action }}" on-action="{{ toast.onAction }}" hint-size="320px,48px">{{ toast.text }}</x-import></div></sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;setup&quot;,&quot;home&quot;,&quot;feed&quot;,&quot;narratives&quot;,&quot;alerts&quot;,&quot;reports&quot;],&quot;default&quot;:&quot;setup&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;brandName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Brand Inc&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+const MENTIONS = [
+  { id: 'm1', source: 'Nikkei', medium: 'Online news', time: '12 min ago', headline: '{B} misses Q3 forecast as costs rise', excerpt: '{B} reported operating profit 18% below guidance, citing higher logistics and energy costs. Shares fell 6% in early trading.', sentiment: 'negative', narrative: 'Earnings miss', reach: '1.2M', spike: true },
+  { id: 'm2', source: 'NHK', medium: 'Broadcast', time: '1h ago', headline: 'Analysts question {B} full-year outlook', excerpt: 'Several analysts said the revised outlook still looks optimistic given weak demand in the second half.', sentiment: 'negative', narrative: 'Earnings miss', reach: '3.1M', spike: true },
+  { id: 'm3', source: 'Asahi Shimbun', medium: 'Print', time: '2h ago', headline: 'Costs weigh on {B} margins', excerpt: 'Margins narrowed for a third straight quarter as input costs climbed.', sentiment: 'mixed', narrative: 'Earnings miss', reach: '640K', spike: true },
+  { id: 'm4', source: 'Kyodo', medium: 'Online news', time: '3h ago', headline: 'Investors react to {B} forecast cut', excerpt: 'Trading volume tripled as investors digested the guidance revision.', sentiment: 'negative', narrative: 'Earnings miss', reach: '410K', spike: true },
+  { id: 'm5', source: 'Yomiuri', medium: 'Print', time: '5h ago', headline: 'New CEO sets out three-year plan for {B}', excerpt: 'The incoming chief executive outlined priorities including cost control and overseas growth.', sentiment: 'neutral', narrative: 'CEO succession', reach: '820K', spike: false },
+  { id: 'm6', source: 'TV Tokyo', medium: 'Broadcast', time: 'Yesterday', headline: '{B} supply chain back to pre-2024 levels', excerpt: 'Lead times have recovered across most product lines, the company said.', sentiment: 'positive', narrative: 'Supply chain recovery', reach: '1.8M', spike: false },
+  { id: 'm7', source: 'X', medium: 'Social', time: 'Yesterday', headline: 'Thread on {B} results passes 40K reposts', excerpt: 'A widely shared thread compares this quarter to last year’s results.', sentiment: 'mixed', narrative: 'Earnings miss', reach: '2.4M', spike: false },
+  { id: 'm8', source: 'Bloomberg', medium: 'Online news', time: '2 days ago', headline: '{B} renews renewable energy pledge', excerpt: 'The company reaffirmed its 2030 target but delayed an interim milestone.', sentiment: 'mixed', narrative: 'ESG pledge', reach: '2.9M', spike: false },
+  { id: 'm9', source: 'Mainichi', medium: 'Print', time: '2 days ago', headline: '{B} opens flagship store in Shibuya', excerpt: 'Crowds queued from early morning for the opening of the new flagship.', sentiment: 'positive', narrative: 'Flagship store', reach: '520K', spike: false },
+  { id: 'm10', source: 'Fuji TV', medium: 'Broadcast', time: '3 days ago', headline: 'Board confirms CEO transition date for {B}', excerpt: 'The handover will take effect at the next shareholders’ meeting.', sentiment: 'neutral', narrative: 'CEO succession', reach: '2.2M', spike: false }
+];
+const NARR = [
+  { id: 'n1', name: 'Earnings miss', count: 412, delta: '+42%', outlets: 38, tone: 'negative', split: { positive: 6, neutral: 28, mixed: 18, negative: 48 }, x: 8, y: 12, size: 190, phrases: ['forecast cut', 'rising costs', 'margin pressure'], voices: ['Nikkei', 'NHK', 'Kyodo'] },
+  { id: 'n2', name: 'CEO succession', count: 208, delta: '+8%', outlets: 21, tone: 'neutral', split: { positive: 22, neutral: 58, mixed: 12, negative: 8 }, x: 42, y: 6, size: 140, phrases: ['three-year plan', 'handover', 'new leadership'], voices: ['Yomiuri', 'Fuji TV'] },
+  { id: 'n3', name: 'Supply chain recovery', count: 96, delta: 'New', outlets: 12, tone: 'positive', split: { positive: 61, neutral: 30, mixed: 6, negative: 3 }, x: 46, y: 52, size: 110, phrases: ['lead times', 'back to normal'], voices: ['TV Tokyo', 'Nikkei'] },
+  { id: 'n4', name: 'ESG pledge', count: 54, delta: '−12%', outlets: 9, tone: 'mixed', split: { positive: 24, neutral: 30, mixed: 36, negative: 10 }, x: 16, y: 64, size: 90, phrases: ['2030 target', 'delayed milestone'], voices: ['Bloomberg'] },
+  { id: 'n5', name: 'Flagship store', count: 41, delta: '+3%', outlets: 7, tone: 'positive', split: { positive: 70, neutral: 24, mixed: 4, negative: 2 }, x: 72, y: 34, size: 84, phrases: ['Shibuya', 'opening day'], voices: ['Mainichi'] }
+];
+const VOL = [120,135,128,140,150,138,145,160,155,148,162,170,158,165,172,168,180,175,190,185,210,560,420,260,230,215,205,198];
+const TONE_BG = { positive: 'rgba(6,199,85,.14)', negative: 'rgba(255,51,75,.14)', mixed: 'rgba(255,153,0,.16)', neutral: '#fff' };
+const TONE_FG = { positive: '#06C755', negative: '#FF334B', mixed: '#FF9900', neutral: '#888888' };
+const TONE_L = { positive: 'Positive', negative: 'Negative', mixed: 'Mixed', neutral: 'Neutral' };
+const THR = { '1.5× normal': { v: 255, fires: 9 }, '2× normal': { v: 340, fires: 4 }, '3× normal': { v: 510, fires: 1 } };
+const BLOCKS = { kpi: ['Key numbers', 'layout-grid'], volume: ['Volume', 'chart-line'], tone: ['Tone split', 'chart-bar'], narratives: ['Narratives', 'waypoints'], mentions: ['Saved mentions', 'newspaper'], note: ['Note', 'text'] };
+const LS = 'lw-proto-v1';
+
+class Component extends DCLogic {
+  mainRef = React.createRef();
+  state = {
+    screen: null, f: { tone: '', medium: '', narrative: '', spike: false, q: '' }, searchDraft: '',
+    mentionId: 'm1', narrId: 'n1', narrView: 'map', range: '7d',
+    keywords: null, kwDraft: '', sources: { online: true, print: true, broadcast: true, social: false },
+    alerts: [
+      { id: 'a1', name: 'Negative spike', rule: 'Negative mentions rise above 2× normal within 1 hour · LINE', on: true },
+      { id: 'a2', name: 'CEO in print', rule: 'Any print mention of the CEO · Email', on: true },
+      { id: 'a3', name: 'Competitor share of voice', rule: 'Share of voice rises above 1.5× normal within 1 day · Email', on: false }
+    ],
+    af: null, returnTo: 'home', saved: ['m3'], blocks: [{ id: 1, type: 'kpi' }, { id: 2, type: 'volume' }, { id: 3, type: 'mentions' }], nextId: 4,
+    toast: null
+  };
+  componentDidMount() {
+    try { const s = JSON.parse(localStorage.getItem(LS) || 'null'); if (s) this.setState(s); } catch (e) {}
+  }
+  componentDidUpdate() {
+    const { toast, af, ...rest } = this.state;
+    try { localStorage.setItem(LS, JSON.stringify({ ...rest, af })); } catch (e) {}
+  }
+  brand() { return this.props.brandName || 'Brand Inc'; }
+  go(screen, extra = {}) {
+    this.setState({ screen, ...extra });
+    if (this.mainRef.current) this.mainRef.current.scrollTop = 0;
+  }
+  toast(text, action, onAction) {
+    clearTimeout(this._t);
+    this.setState({ toast: { text, action, onAction: () => { this.setState({ toast: null }); onAction && onAction(); } } });
+    this._t = setTimeout(() => this.setState({ toast: null }), 3500);
+  }
+  feedWith(patch) { this.go('feed', { f: { tone: '', medium: '', narrative: '', spike: false, q: '', ...patch } }); }
+  openAlert(scope, from) {
+    this.go('alertNew', { returnTo: from, af: { scope, metric: 'Negative mentions', threshold: '2× normal', window: '1 hour', name: '', ch: { Email: true, LINE: true, Slack: false }, err: false } });
+  }
+  renderVals() {
+    const st = this.state, B = this.brand();
+    const screen = st.screen || this.props.startScreen || 'setup';
+    const mentions = MENTIONS.map(m => ({ ...m, headline: m.headline.replace('{B}', B), excerpt: m.excerpt.replace('{B}', B), toneLabel: TONE_L[m.sentiment], open: () => this.go('mention', { mentionId: m.id }) }));
+    const keywords = st.keywords || [B, 'LINE Watch'];
+    const s = { setup: screen === 'setup', app: screen !== 'setup' };
+    ['home', 'feed', 'mention', 'narratives', 'alerts', 'alertNew', 'reports'].forEach(k => s[k] = screen === k);
+    const navKey = screen === 'mention' ? 'feed' : screen === 'alertNew' ? 'alerts' : screen;
+    const nav = [['home', 'Home', 'house'], ['feed', 'Media feed', 'newspaper'], ['narratives', 'Narratives', 'waypoints'], ['alerts', 'Alerts', 'bell'], ['reports', 'Reports', 'file-text']].map(([k, label, icon]) => ({
+      label, icon, bg: navKey === k ? '#E6F9EE' : 'transparent', fg: navKey === k ? '#05A648' : '#555',
+      count: k === 'reports' ? st.saved.length || null : null, onClick: () => this.go(k)
+    }));
+    const go = {}; ['home', 'feed', 'narratives', 'alerts', 'reports'].forEach(k => go[k] = () => this.go(k));
+
+    // volume chart
+    const max = 600, pts = VOL.map((v, i) => [i / (VOL.length - 1) * 1000, 200 - v / max * 200]);
+    const volLine = pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
+    const volArea = volLine + ' L1000 200 L0 200 Z';
+
+    // feed
+    const f = st.f, q = (f.q || '').toLowerCase();
+    const feed = mentions.filter(m => (!f.tone || m.sentiment === f.tone) && (!f.medium || m.medium === f.medium) && (!f.narrative || m.narrative === f.narrative) && (!f.spike || m.spike) && (!q || (m.headline + ' ' + m.source + ' ' + m.excerpt).toLowerCase().includes(q)));
+    const setF = patch => this.setState({ f: { ...st.f, ...patch } });
+    const chips = [{ label: 'Last 7 days', remove: null }];
+    if (f.spike) chips.push({ label: 'Spike: Thu 14:00–20:00', remove: () => setF({ spike: false }) });
+    if (f.q) chips.push({ label: '“' + f.q + '”', remove: () => { setF({ q: '' }); this.setState({ searchDraft: '' }); } });
+    if (f.tone) chips.push({ label: 'Tone: ' + TONE_L[f.tone], remove: () => setF({ tone: '' }) });
+    if (f.medium) chips.push({ label: f.medium, remove: () => setF({ medium: '' }) });
+    if (f.narrative) chips.push({ label: 'Narrative: ' + f.narrative, remove: () => setF({ narrative: '' }) });
+
+    // mention
+    const mi = Math.max(0, feed.findIndex(m => m.id === st.mentionId));
+    const list = feed.length && feed.some(m => m.id === st.mentionId) ? feed : mentions;
+    const idx = list.findIndex(m => m.id === st.mentionId);
+    const m = list[idx] || mentions[0];
+    const pickRows = [['Kyodo', 'Online news', '+40 min'], ['Yahoo News', 'Online news', '+1h'], ['Yomiuri', 'Print', '+3h'], ['NHK', 'Broadcast', '+6h'], ['X', 'Social', '+9h']].map(([source, medium, delay]) => ({ source, medium, delay }));
+    const pickups = [{ x: '1%', delay: m.source, color: '#FF334B', label: 'Original' }].concat(pickRows.map((p, i) => ({ x: [10, 18, 34, 52, 72][i] + '%', delay: p.delay, color: '#888888', label: p.source })));
+    const added = st.saved.includes(m.id);
+
+    // narratives
+    const narrs = NARR.map(n => ({ ...n, countLabel: n.count.toLocaleString() + ' mentions', open: () => this.go('narratives', { narrId: n.id }), select: () => this.setState({ narrId: n.id }) }));
+    const nSel = narrs.find(n => n.id === st.narrId) || narrs[0];
+    const bubbles = narrs.map(n => ({ ...n, x: n.x + '%', y: n.y + '%', size: (n.size / 6.4).toFixed(1) + '%', bg: TONE_BG[n.tone], border: (n.id === nSel.id ? '3px solid ' : '1.5px solid ') + (n.tone === 'neutral' ? '#888888' : TONE_FG[n.tone]) }));
+    const narrList = narrs.map(n => ({ ...n, bg: n.id === nSel.id ? '#E6F9EE' : '#fff', deltaColor: n.delta.startsWith('+') ? '#FF334B' : '#555' }));
+
+    // alert form
+    let af = null;
+    if (st.af) {
+      const a = st.af, set = patch => this.setState({ af: { ...st.af, ...patch } }), thr = THR[a.threshold];
+      const autoName = (a.metric === 'Negative mentions' ? 'Negative spike' : a.metric) + ' · ' + a.scope;
+      af = {
+        ...a, err: a.err,
+        setMetric: e => set({ metric: e.target.value }), setThreshold: e => set({ threshold: e.target.value }), setWindow: e => set({ window: e.target.value }), setName: e => set({ name: e.target.value }),
+        firesLabel: thr.fires + (thr.fires === 1 ? ' time' : ' times'), thrY: (100 - thr.v / max * 100).toFixed(1) + '%',
+        hint: thr.fires > 6 ? 'That’s more than once a week. Consider a higher threshold.' : thr.fires === 1 ? 'Only the largest spikes will trigger this alert.' : 'About once a week — a good level for most teams.',
+        save: () => {
+          const chs = Object.keys(a.ch).filter(k => a.ch[k]);
+          if (!chs.length) return set({ err: true });
+          const alert = { id: 'a' + Date.now(), name: a.name || autoName, rule: a.metric + ' rise above ' + a.threshold + ' within ' + a.window + ' · ' + chs.join(', '), on: true, isNew: true };
+          const back = st.returnTo || 'alerts';
+          this.go(back, { alerts: [alert, ...st.alerts], af: null });
+          this.toast('Alert saved', back === 'alerts' ? null : 'View alerts', () => this.go('alerts'));
+        },
+        cancel: () => this.go(st.returnTo || 'alerts', { af: null })
+      };
+      if (!a.name) af.name = '';
+    }
+    const scopeOpts = st.af ? [B, 'Narrative: Earnings miss', 'Saved search: Brand crisis'].concat(st.af.scope.startsWith('Narrative: ') && st.af.scope !== 'Narrative: Earnings miss' ? [st.af.scope] : []).map(label => ({ label, on: st.af.scope === label, pick: () => this.setState({ af: { ...st.af, scope: label } }) })) : [];
+    const channelOpts = st.af ? ['Email', 'LINE', 'Slack'].map(label => ({ label, on: !!st.af.ch[label], toggle: v => this.setState({ af: { ...st.af, err: false, ch: { ...st.af.ch, [label]: v } } }) })) : [];
+
+    // setup preview
+    const perSrc = { online: 620, print: 180, broadcast: 240, social: 2100 };
+    const srcTotal = Object.keys(perSrc).reduce((t, k) => t + (st.sources[k] ? perSrc[k] : 0), 0);
+    const perDay = keywords.length ? Math.round(srcTotal * (0.4 + keywords.length * 0.3) / 10) * 10 : 0;
+
+    // reports
+    const savedRows = mentions.filter(x => st.saved.includes(x.id));
+    const blocks = st.blocks.map(b => ({ label: BLOCKS[b.type][0], isKpi: b.type === 'kpi', isVolume: b.type === 'volume', isTone: b.type === 'tone', isNarr: b.type === 'narratives', isMentions: b.type === 'mentions', isNote: b.type === 'note', remove: () => this.setState({ blocks: st.blocks.filter(x => x.id !== b.id) }) }));
+    const palette = Object.keys(BLOCKS).map(type => ({ label: BLOCKS[type][0], icon: BLOCKS[type][1], add: () => { this.setState({ blocks: [...st.blocks, { id: st.nextId, type }], nextId: st.nextId + 1 }); this.toast(BLOCKS[type][0] + ' added'); } }));
+
+    const titles = { home: 'Home', feed: 'Media feed', mention: m.source + ' · ' + m.medium, narratives: 'Narratives', alerts: 'Alerts', alertNew: 'Create alert', reports: 'Weekly brand report' };
+    const backLink = screen === 'mention' ? () => this.go('feed') : screen === 'alertNew' ? af && af.cancel : null;
+    const kpiSet = { '24h': ['214', 64, '3.9M', 31, '36%', 12, '44%', 3], '7d': ['1,092', 42, '18.6M', 6, '28%', 9, '41%', -2], '30d': ['3,870', 11, '61.2M', 4, '19%', -3, '42%', 1] }[st.range];
+
+    return {
+      s, go, nav, mainRef: this.mainRef, pageTitle: titles[screen], backLink,
+      searchDraft: st.searchDraft,
+      onSearchChange: e => this.setState({ searchDraft: e.target.value }),
+      onSearchKey: e => { if (e.key === 'Enter') this.feedWith({ q: st.searchDraft.trim() }); },
+      // setup
+      keywordChips: keywords.map(k => ({ label: k, remove: () => this.setState({ keywords: keywords.filter(x => x !== k) }) })),
+      kwDraft: st.kwDraft,
+      onKwChange: e => this.setState({ kwDraft: e.target.value }),
+      onKwKey: e => { const v = st.kwDraft.trim(); if (e.key === 'Enter' && v && !keywords.includes(v)) this.setState({ keywords: [...keywords, v], kwDraft: '' }); },
+      sourceOpts: [['online', 'Online news'], ['print', 'Print'], ['broadcast', 'Broadcast'], ['social', 'Social']].map(([k, label]) => ({ label, on: st.sources[k], toggle: v => this.setState({ sources: { ...st.sources, [k]: v } }) })),
+      langOpts: ['Japanese', 'English', 'Japanese + English'], regionOpts: ['Japan', 'Asia-Pacific', 'Global'],
+      previewPerDay: '~' + perDay.toLocaleString(),
+      previewMentions: mentions.slice(0, 3).map(x => ({ source: x.source, headline: x.headline, sub: x.source + ' · ' + x.time })),
+      setupDisabled: !keywords.length || !srcTotal,
+      setupHint: !keywords.length ? 'Add at least one keyword.' : !srcTotal ? 'Pick at least one source.' : 'Takes about a minute to backfill 7 days.',
+      // home
+      range: st.range, rangeItems: [{ value: '24h', label: '24 hours' }, { value: '7d', label: '7 days' }, { value: '30d', label: '30 days' }], setRange: v => this.setState({ range: v }),
+      showSpikeBanner: st.range !== '30d',
+      kpis: [
+        { label: 'Mentions', value: kpiSet[0], delta: kpiSet[1], icon: 'newspaper', invert: false, onClick: () => this.feedWith({}) },
+        { label: 'Reach', value: kpiSet[2], delta: kpiSet[3], icon: 'eye', invert: false, onClick: () => this.feedWith({}) },
+        { label: 'Negative', value: kpiSet[4], delta: kpiSet[5], icon: 'trending-down', invert: true, onClick: () => this.feedWith({ tone: 'negative' }) },
+        { label: 'Share of voice', value: kpiSet[6], delta: kpiSet[7], icon: 'chart-pie', invert: false, onClick: () => this.go('narratives') }
+      ],
+      volLine, volArea, spikeX: (21 / 27 * 100).toFixed(1) + '%', spikeY: (100 - 560 / max * 100).toFixed(1) + '%',
+      dayLabels: ['Fri', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu'],
+      openSpike: e => { e && e.preventDefault && e.preventDefault(); this.feedWith({ spike: true, tone: 'negative' }); },
+      topNarratives: narrs.slice(0, 3),
+      latest: mentions.slice(0, 3),
+      alertFromHome: () => this.openAlert(B, 'home'),
+      // feed
+      f, chips, feed, feedCount: feed.length, feedEmpty: !feed.length,
+      hasFilters: chips.length > 1,
+      toneOpts: [{ value: '', label: 'Any tone' }].concat(Object.keys(TONE_L).map(k => ({ value: k, label: TONE_L[k] }))),
+      mediumOpts: [{ value: '', label: 'Any media type' }, 'Online news', 'Print', 'Broadcast', 'Social'].map(o => typeof o === 'string' ? { value: o, label: o } : o),
+      narrOpts: [{ value: '', label: 'Any narrative' }].concat(NARR.map(n => ({ value: n.name, label: n.name }))),
+      setTone: e => setF({ tone: e.target.value }), setMedium: e => setF({ medium: e.target.value }), setNarrFilter: e => setF({ narrative: e.target.value }),
+      clearFilters: () => { this.setState({ searchDraft: '' }); setF({ tone: '', medium: '', narrative: '', spike: false, q: '' }); },
+      saveSearch: () => this.toast('Search saved as “Brand crisis”', 'Create alert', () => this.openAlert('Saved search: Brand crisis', 'feed')),
+      exportCsv: () => this.toast(feed.length + ' mentions exported as CSV'),
+      // mention
+      m, mPos: idx >= 0 ? (idx + 1) + ' of ' + list.length : '',
+      mPrev: () => this.setState({ mentionId: list[(idx - 1 + list.length) % list.length].id }),
+      mNext: () => this.setState({ mentionId: list[(idx + 1) % list.length].id }),
+      mOpenNarr: () => { const n = NARR.find(x => x.name === m.narrative); this.go('narratives', { narrId: n ? n.id : 'n1' }); },
+      pickups, pickupRows: pickRows.slice(0, 4), pickupSummary: 'Picked up by ' + pickRows.length + ' outlets within 9 hours',
+      similar: mentions.filter(x => x.narrative === m.narrative && x.id !== m.id).slice(0, 3),
+      mAdded: added, addLabel: added ? 'Added to report' : 'Add to report', addIcon: added ? 'check' : 'file-plus',
+      addToReport: () => { this.setState({ saved: [...st.saved, m.id] }); this.toast('Added to Weekly brand report', 'View report', () => this.go('reports')); },
+      // narratives
+      narrView: st.narrView, isMap: st.narrView === 'map', isList: st.narrView === 'list',
+      narrViewItems: [{ value: 'map', label: 'Map' }, { value: 'list', label: 'List' }], setNarrView: v => this.setState({ narrView: v }),
+      bubbles, narrList, nSel,
+      narrViewFeed: () => this.feedWith({ narrative: nSel.name }),
+      alertFromNarr: () => this.openAlert('Narrative: ' + nSel.name, 'narratives'),
+      // alerts
+      alertRows: st.alerts.map(a => ({ ...a, toggle: v => { this.setState({ alerts: st.alerts.map(x => x.id === a.id ? { ...x, on: v } : x) }); this.toast(v ? 'Alert resumed' : 'Alert paused'); } })),
+      alertBlank: () => this.openAlert(B, 'alerts'),
+      af: af || {}, scopeOpts, channelOpts,
+      metricOpts: ['Negative mentions', 'All mentions', 'Share of voice'], thrOpts: Object.keys(THR), winOpts: ['1 hour', '6 hours', '1 day'],
+      // reports
+      reportTitle: 'Weekly brand report · ' + B, reportMeta: st.blocks.length + ' blocks · ' + savedRows.length + ' saved mentions',
+      blocks, blocksEmpty: !blocks.length, palette, savedRows, savedEmpty: !savedRows.length,
+      exportPdf: () => this.toast('Weekly brand report exported as PDF'),
+      scheduleReport: () => this.toast('Scheduled every Monday at 09:00'),
+      toast: st.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

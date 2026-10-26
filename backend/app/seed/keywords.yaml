@@ -1,0 +1,40 @@
+# category priority when an article matches several: LINE > COMPETITOR > GOVERNMENT > INDUSTRY
+# case_sensitive: true for short/ambiguous terms (a bare "line" is not LINE).
+- {term: "LINE", category: LINE, company: LINE, case_sensitive: true}
+- {term: "LINE Indonesia", category: LINE, company: LINE}
+- {term: "LINE TODAY", category: LINE, company: LINE}
+- {term: "LINE VOOM", category: LINE, company: LINE}
+- {term: "LINE Official Account", category: LINE, company: LINE, aliases: ["LINE OA"]}
+- {term: "LINE Stickers", category: LINE, company: LINE, aliases: ["LINE Sticker", "stiker LINE"]}
+- {term: "LINE Creators Market", category: LINE, company: LINE}
+- {term: "LINE Pay", category: LINE, company: LINE}
+- {term: "LINE MAN", category: LINE, company: LINE, aliases: ["LINE MAN Wongnai"]}
+- {term: "LY Corporation", category: LINE, company: LINE, aliases: ["LY Corp", "LINE Yahoo", "LINE Yahoo Corp"]}
+
+- {term: "WhatsApp", category: COMPETITOR, company: WhatsApp}
+- {term: "Telegram", category: COMPETITOR, company: Telegram}
+- {term: "WeChat", category: COMPETITOR, company: WeChat}
+- {term: "Facebook Messenger", category: COMPETITOR, company: Facebook Messenger, aliases: ["Messenger Facebook", "Meta Messenger"]}
+- {term: "KakaoTalk", category: COMPETITOR, company: KakaoTalk, aliases: ["Kakao Talk"]}
+
+- {term: "Messaging Apps", category: INDUSTRY, aliases: ["messaging app", "aplikasi pesan", "aplikasi chat", "aplikasi perpesanan"]}
+- {term: "Social Media", category: INDUSTRY, aliases: ["media sosial"]}
+- {term: "Creator Economy", category: INDUSTRY, aliases: ["ekonomi kreator", "content creator", "kreator konten"]}
+- {term: "Digital Trust", category: INDUSTRY, aliases: ["kepercayaan digital"]}
+- {term: "Online Safety", category: INDUSTRY, aliases: ["keamanan online", "keselamatan daring", "keamanan daring"]}
+- {term: "Privacy", category: INDUSTRY, aliases: ["privasi", "data privacy"]}
+- {term: "Cybersecurity", category: INDUSTRY, aliases: ["keamanan siber", "kejahatan siber", "serangan siber"]}
+- {term: "Artificial Intelligence", category: INDUSTRY, aliases: ["kecerdasan buatan", "AI generatif", "generative AI"]}
+- {term: "Fintech", category: INDUSTRY, aliases: ["financial technology", "teknologi finansial"]}
+- {term: "Digital Payments", category: INDUSTRY, aliases: ["pembayaran digital", "dompet digital", "e-wallet", "QRIS"]}
+- {term: "E-commerce", category: INDUSTRY, aliases: ["ecommerce", "perdagangan elektronik"]}
+- {term: "Digital Platforms", category: INDUSTRY, aliases: ["platform digital"]}
+
+- {term: "Komdigi", category: GOVERNMENT, aliases: ["Kementerian Komunikasi dan Digital", "Kemkomdigi", "Kominfo"]}
+- {term: "OJK", category: GOVERNMENT, aliases: ["Otoritas Jasa Keuangan"], case_sensitive: true}
+- {term: "Bank Indonesia", category: GOVERNMENT}
+- {term: "KPPU", category: GOVERNMENT, aliases: ["Komisi Pengawas Persaingan Usaha"]}
+- {term: "PDP Law", category: GOVERNMENT, aliases: ["UU PDP", "Pelindungan Data Pribadi", "Perlindungan Data Pribadi"]}
+- {term: "Digital Platform Regulation", category: GOVERNMENT, aliases: ["regulasi platform digital", "aturan platform digital", "regulasi platform"]}
+- {term: "Cybersecurity Regulation", category: GOVERNMENT, aliases: ["regulasi keamanan siber", "RUU Keamanan dan Ketahanan Siber", "RUU KKS"]}
+- {term: "Online Safety Policy", category: GOVERNMENT, aliases: ["kebijakan keamanan online", "perlindungan anak di ruang digital", "regulasi keamanan online"]}

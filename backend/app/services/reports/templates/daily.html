@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% from "macros.html" import section, article_block %}
+{% block title %}LINE WATCH Daily Report · {{ label }}{% endblock %}
+{% block body %}
+<h1>LINE <span class="g">WATCH</span> · Daily Report</h1>
+<div class="sub">{{ label }} · coverage from {{ d.start | localtime(tz) }} to {{ d.end | localtime(tz) }} · {{ d.total }} articles</div>
+
+{{ section("LINE Coverage", d.line, tz) }}
+{{ section("Competitor Coverage", d.competitors, tz) }}
+{{ section("Industry News", d.industry, tz) }}
+{{ section("Government Updates", d.government, tz) }}
+{{ section("Negative Coverage", d.negative, tz, "No negative LINE coverage in this period.") }}
+{{ section("Opportunities", d.opportunities, tz, "No opportunities flagged (competitor setbacks and strongly positive LINE coverage appear here).") }}
+
+<h2>Recommended Actions</h2>
+{% for action, items in d.actions.items() %}
+  <h3>{{ action }} <span class="count">{{ items | length }}</span></h3>
+  {% for a in items %}{{ article_block(a, tz) }}{% endfor %}
+{% else %}
+  <p class="empty">No actions recommended.</p>
+{% endfor %}
+{% endblock %}

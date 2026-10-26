@@ -1,0 +1,46 @@
+# kind: rss          -> direct publisher feed (checked reachable on 2026-10-23)
+# kind: google_news  -> Google News RSS query; item links are decoded to the original publisher URL.
+#                       Used for outlets without a usable RSS feed (Detik, Kompas, Kontan, Bisnis, ...)
+#                       and for government sites. `query` is a Google News search string.
+rss:
+  - {media: "Antara News", media_type: national, url: "https://www.antaranews.com/rss/terkini.xml"}
+  - {media: "Antara News", media_type: technology, url: "https://www.antaranews.com/rss/tekno.xml"}
+  - {media: "Antara News", media_type: business, url: "https://www.antaranews.com/rss/ekonomi.xml"}
+  - {media: "CNBC Indonesia", media_type: business, url: "https://www.cnbcindonesia.com/rss"}
+  - {media: "CNBC Indonesia", media_type: technology, url: "https://www.cnbcindonesia.com/tech/rss"}
+  - {media: "CNN Indonesia", media_type: technology, url: "https://www.cnnindonesia.com/teknologi/rss"}
+  - {media: "CNN Indonesia", media_type: business, url: "https://www.cnnindonesia.com/ekonomi/rss"}
+  - {media: "Tempo", media_type: national, url: "https://rss.tempo.co/"}
+  - {media: "Liputan6", media_type: technology, url: "https://feed.liputan6.com/rss/tekno"}
+  - {media: "Republika", media_type: national, url: "https://www.republika.co.id/rss"}
+  - {media: "Sindonews", media_type: national, url: "https://www.sindonews.com/feed"}
+  - {media: "Okezone", media_type: national, url: "https://sindikasi.okezone.com/index.php/rss/1/RSS2.0"}
+  - {media: "Katadata", media_type: business, url: "https://katadata.co.id/rss"}
+  - {media: "DailySocial", media_type: technology, url: "https://dailysocial.id/feed"}
+  - {media: "Selular.id", media_type: technology, url: "https://selular.id/feed/"}
+  - {media: "Gizmologi", media_type: technology, url: "https://www.gizmologi.id/feed/"}
+
+google_news:
+  # outlets without a working feed
+  - {media: "Detik", media_type: national, site: "detik.com"}
+  - {media: "Kompas", media_type: national, site: "kompas.com"}
+  - {media: "Kontan", media_type: business, site: "kontan.co.id"}
+  - {media: "Bisnis.com", media_type: business, site: "bisnis.com"}
+  - {media: "Tribunnews", media_type: national, site: "tribunnews.com"}
+  - {media: "Kumparan", media_type: national, site: "kumparan.com"}
+  - {media: "Suara.com", media_type: national, site: "suara.com"}
+  - {media: "Tech in Asia", media_type: technology, site: "techinasia.com"}
+  - {media: "IDN Times", media_type: national, site: "idntimes.com"}
+  # government & regulators (whole site, then keyword-filtered)
+  - {media: "Komdigi", media_type: government, site: "komdigi.go.id"}
+  - {media: "OJK", media_type: government, site: "ojk.go.id"}
+  - {media: "Bank Indonesia", media_type: government, site: "bi.go.id"}
+  - {media: "KPPU", media_type: government, site: "kppu.go.id"}
+  # press releases / industry
+  - {media: "Press releases (Antara)", media_type: press_release, query: "siaran pers LINE OR WhatsApp OR Telegram site:antaranews.com"}
+  # brand queries across all outlets
+  - {media: "Google News", media_type: national, query: "\"LINE Indonesia\" OR \"LINE Pay\" OR \"LINE MAN\" OR \"LINE VOOM\" OR \"LINE TODAY\" OR \"LY Corporation\""}
+  - {media: "Google News", media_type: national, query: "\"LINE Official Account\" OR \"LINE Creators Market\" OR \"stiker LINE\""}
+  - {media: "Google News", media_type: national, query: "WhatsApp OR Telegram OR WeChat OR KakaoTalk OR \"Facebook Messenger\""}
+  - {media: "Google News", media_type: national, query: "\"aplikasi pesan\" OR \"media sosial\" OR \"kreator konten\" OR \"keamanan siber\" OR \"kecerdasan buatan\""}
+  - {media: "Google News", media_type: national, query: "Komdigi OR OJK OR KPPU OR \"UU PDP\" OR \"regulasi platform digital\" OR \"keamanan online\""}

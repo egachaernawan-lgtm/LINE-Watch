@@ -1,0 +1,8 @@
+/* LINE Seed JP (Japanese glyphs) from Google Fonts (OFL). @import must precede other rules. */
+@import url("https://fonts.googleapis.com/css2?family=LINE+Seed+JP:wght@100;400;700;800&display=swap");
+/* LINE Seed Sans (EN) — self-hosted. */
+@font-face{font-family:"LINE Seed Sans";src:url("../fonts/LINESeedSans_W_Th.woff2") format("woff2");font-weight:100;font-style:normal;font-display:swap}
+@font-face{font-family:"LINE Seed Sans";src:url("../fonts/LINESeedSans_W_Rg.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"LINE Seed Sans";src:url("../fonts/LINESeedSans_W_Bd.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"LINE Seed Sans";src:url("../fonts/LINESeedSans_W_XBd.woff2") format("woff2");font-weight:800;font-style:normal;font-display:swap}
+@font-face{font-family:"LINE Seed Sans";src:url("../fonts/LINESeedSans_W_He.woff2") format("woff2");font-weight:900;font-style:normal;font-display:swap}

@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* LINE Watch design system tokens (from design/.../_ds/tokens). Fonts are served from /public/fonts. */
+@font-face { font-family: "LINE Seed Sans"; src: url("/fonts/LINESeedSans_W_Th.woff2") format("woff2"); font-weight: 100; font-display: swap; }
+@font-face { font-family: "LINE Seed Sans"; src: url("/fonts/LINESeedSans_W_Rg.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "LINE Seed Sans"; src: url("/fonts/LINESeedSans_W_Bd.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "LINE Seed Sans"; src: url("/fonts/LINESeedSans_W_XBd.woff2") format("woff2"); font-weight: 800; font-display: swap; }
+@font-face { font-family: "LINE Seed Sans"; src: url("/fonts/LINESeedSans_W_He.woff2") format("woff2"); font-weight: 900; font-display: swap; }
+
+:root {
+  --line-green: #06c755;
+  --line-green-pressed: #05b04b;
+  --line-green-tint: #e6f9ee;
+  --gray-900: #111111;
+  --gray-700: #555555;
+  --gray-500: #888888;
+  --gray-300: #cccccc;
+  --gray-200: #ebebeb;
+  --gray-100: #f4f4f4;
+  --red-500: #ff334b;
+  --red-tint: #ffebee;
+  --orange-500: #ff9900;
+  --orange-tint: #fff4e0;
+  --blue-500: #007aff;
+  --blue-tint: #e5f1ff;
+
+  --sentiment-positive: var(--line-green);
+  --sentiment-neutral: var(--gray-500);
+  --sentiment-negative: var(--red-500);
+
+  --font-sans: "LINE Seed Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --overlay-hover: rgba(0, 0, 0, 0.05);
+  --overlay-pressed: rgba(0, 0, 0, 0.08);
+  --shadow-sticky: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-popover: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --shadow-modal: 0 8px 24px rgba(0, 0, 0, 0.16);
+}
+
+html, body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--gray-900);
+  background: var(--gray-100);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--blue-500); text-decoration: none; }
+a:hover { text-decoration: underline; }
+:focus-visible { outline: 2px solid var(--line-green); outline-offset: 2px; }
+.tabular { font-variant-numeric: tabular-nums; }
