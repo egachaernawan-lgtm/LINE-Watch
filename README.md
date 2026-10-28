@@ -62,3 +62,14 @@ Anything left blank is skipped with a message in the run result (ingestion still
 cd backend && .venv/Scripts/python -m pytest
 cd frontend && npm run typecheck && npm run lint && npm run build
 ```
+
+## Demo deployment (Vercel, free, no backend)
+
+The demo serves a snapshot of **real, analysed articles** from `frontend/src/data/snapshot.json`; nothing is mocked.
+
+1. Collect and analyse (backend + Docker Postgres running): `POST /internal/ingest` a few times so Gemini analyses the backlog.
+2. Export the snapshot (from `backend/`, venv active): `python -m app.seed.export_snapshot --days 14`. It prints the article count, newest/oldest times and sample headlines.
+3. Commit `frontend/src/data/snapshot.json` and push. Vercel redeploys.
+4. Vercel project: root directory `frontend`, environment variable `NEXT_PUBLIC_DEMO_MODE=true` (nothing else needed).
+
+Repeat steps 1-3 before the presentation to refresh the feed. Article bodies are cut to a 600-character excerpt; every card links to the original source.

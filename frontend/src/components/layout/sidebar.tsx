@@ -17,6 +17,8 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { demoMode } from "@/lib/demo";
+
 const NAV: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/", label: "Home", icon: Home },
   { href: "/feed", label: "Latest feed", icon: Radio },
@@ -28,9 +30,32 @@ const NAV: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/reports", label: "Reports", icon: FileText },
 ];
 
+function UserBox() {
+  const { data } = useSession();
+  return (
+    <div className="flex items-center gap-3 border-t border-gray-200 px-3 pt-4">
+      <div className="min-w-0 flex-1">
+        <div className="truncate text-sm font-bold">{data?.user?.name ?? "Signed in"}</div>
+        <div className="truncate text-xs text-gray-500">{data?.user?.email}</div>
+      </div>
+      <button aria-label="Sign out" onClick={() => signOut({ callbackUrl: "/login" })} className="rounded-md p-2 text-gray-500 hover:bg-black/5">
+        <LogOut className="h-4 w-4" />
+      </button>
+    </div>
+  );
+}
+
+function DemoUserBox() {
+  return (
+    <div className="border-t border-gray-200 px-3 pt-4">
+      <div className="text-sm font-bold">Demo guest</div>
+      <div className="text-xs text-gray-500">Read-only snapshot</div>
+    </div>
+  );
+}
+
 export function Sidebar() {
   const pathname = usePathname();
-  const { data } = useSession();
   return (
     <aside className="fixed inset-y-0 left-0 hidden w-60 flex-col border-r border-gray-200 bg-white px-3 py-5 lg:flex">
       <div className="px-3 pb-5 text-xl font-extrabold">
@@ -54,15 +79,7 @@ export function Sidebar() {
           );
         })}
       </nav>
-      <div className="flex items-center gap-3 border-t border-gray-200 px-3 pt-4">
-        <div className="min-w-0 flex-1">
-          <div className="truncate text-sm font-bold">{data?.user?.name ?? "Signed in"}</div>
-          <div className="truncate text-xs text-gray-500">{data?.user?.email}</div>
-        </div>
-        <button aria-label="Sign out" onClick={() => signOut({ callbackUrl: "/login" })} className="rounded-md p-2 text-gray-500 hover:bg-black/5">
-          <LogOut className="h-4 w-4" />
-        </button>
-      </div>
+      {demoMode ? <DemoUserBox /> : <UserBox />}
     </aside>
   );
 }

@@ -1,10 +1,12 @@
 "use client";
 
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
 import { Button } from "@/components/ui/button";
+import { demoMode } from "@/lib/demo";
 
 function LoginCard() {
   const error = useSearchParams().get("error");
@@ -19,9 +21,18 @@ function LoginCard() {
           {error === "AccessDenied" ? "This Google account is not on the access list. Ask an admin to add your email." : "Sign-in failed. Please try again."}
         </p>
       )}
-      <Button className="mt-6 w-full" onClick={() => signIn("google", { callbackUrl: "/" })}>
-        Sign in with Google
-      </Button>
+      {demoMode ? (
+        <>
+          <p className="mt-5 text-sm text-gray-700">Demo with real articles collected from Indonesian media. Read-only, no sign-in needed.</p>
+          <Link href="/feed" className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-md bg-brand font-bold text-white hover:bg-brand-pressed hover:no-underline">
+            Enter demo
+          </Link>
+        </>
+      ) : (
+        <Button className="mt-6 w-full" onClick={() => signIn("google", { callbackUrl: "/" })}>
+          Sign in with Google
+        </Button>
+      )}
     </div>
   );
 }

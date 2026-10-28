@@ -3,11 +3,20 @@ import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
 import { authOptions, isAllowed } from "@/lib/auth";
+import { demoMode } from "@/lib/demo";
+import { demoResponse } from "@/lib/demo-api";
 import { devAuthBypass } from "@/lib/dev";
 
 // Same-origin proxy: the browser never sees the backend token. Each request is signed for 60 s
 // with the secret shared with the FastAPI backend, which re-checks the e-mail allow-list.
 async function proxy(req: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
+  if (demoMode) {
+    // Demo deployment: read-only data from the exported snapshot, no backend and no login.
+    if (req.method !== "GET") return NextResponse.json({ detail: "Read-only demo" }, { status: 405 });
+    const body = demoResponse((await params).path, req.nextUrl.searchParams);
+    return body === null ? NextResponse.json({ detail: "Not found" }, { status: 404 }) : NextResponse.json(body);
+  }
+
   const session = await getServerSession(authOptions);
   const email = devAuthBypass ? "dev@local" : session?.user?.email;
   if (!email || (!devAuthBypass && !isAllowed(email))) {
