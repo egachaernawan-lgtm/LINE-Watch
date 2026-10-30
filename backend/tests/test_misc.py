@@ -30,3 +30,11 @@ def test_sheet_columns_match_the_brief():
         "Date Published", "Date Collected", "Headline", "Media", "Author", "URL", "Keyword",
         "Category", "Company", "Sentiment", "Importance", "Summary", "Recommended Action",
     ]
+
+
+def test_with_window_widens_google_news_query():
+    from app.services.ingestion.fetchers.google_news import build_query, google_news_url, with_window
+
+    url = google_news_url(build_query("government", "ojk.go.id", None))
+    assert "when%3A1d" in url
+    assert "when%3A30d" in with_window(url, "30d") and "when%3A1d" not in with_window(url, "30d")

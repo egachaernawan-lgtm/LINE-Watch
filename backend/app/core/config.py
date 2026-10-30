@@ -26,16 +26,21 @@ class Settings(BaseSettings):
     gemini_api_key: str = ""
     gemini_model: str = "gemini-3.8-flash"
     gemini_concurrency: int = 2
-    # Free-tier keys allow roughly 10 requests/minute. Raise on a paid plan.
-    gemini_requests_per_minute: int = 10
-    # Articles analysed per ingest run; the rest are picked up by the next runs (newest first).
-    gemini_max_per_run: int = 30
+    # Free tier (per model): 5 requests/minute and 20 requests/day. Raise on a paid plan.
+    gemini_requests_per_minute: int = 5
+    # Articles per request: batching stretches the daily request allowance (20 requests x 5 = 100 articles).
+    gemini_batch_size: int = 5
+    # Used in order when the primary model runs out of quota; each model has its own allowance.
+    gemini_fallback_models: list[str] = Field(default_factory=list)
+    # Articles analysed per ingest run; the rest are picked up by the next runs (LINE first, then newest).
+    gemini_max_per_run: int = 50
 
     # Ingestion
     fetch_timeout_s: float = 20.0
     fetch_concurrency: int = 8
     max_items_per_source: int = 40
     max_article_age_hours: int = 48  # only collect recently published items
+    google_news_window: str = "1d"  # Google News `when:` window; widen (e.g. 30d) together with the age above to backfill
     title_dedupe_hours: int = 48
     user_agent: str = "LINEWatchBot/1.0 (+media monitoring for LINE Indonesia)"
 

@@ -6,6 +6,7 @@ a Google redirect link.
 """
 
 import asyncio
+import re
 from urllib.parse import quote_plus, urlsplit
 
 import feedparser
@@ -37,13 +38,18 @@ def google_news_url(query: str) -> str:
     return BASE.format(q=quote_plus(query))
 
 
+def with_window(url: str, window: str) -> str:
+    """Swap the `when:` time window baked into a stored feed URL (e.g. 1d -> 30d for a backfill)."""
+    return re.sub(r"when%3A\d+[hdm]", f"when%3A{window}", url)
+
+
 def is_google_link(url: str) -> bool:
     return urlsplit(url).netloc.endswith("news.google.com")
 
 
 async def fetch_google_news(client: httpx.AsyncClient, source) -> list[RawItem]:
     settings = get_settings()
-    text = await fetch_feed_text(client, source.feed_url)
+    text = await fetch_feed_text(client, with_window(source.feed_url, settings.google_news_window))
     feed = await asyncio.to_thread(feedparser.parse, text)
     items = []
     for entry in feed.entries[: settings.max_items_per_source]:

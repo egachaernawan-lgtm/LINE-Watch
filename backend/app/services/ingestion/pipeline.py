@@ -7,6 +7,7 @@ unique url_hash makes every insert idempotent.
 import asyncio
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
+from urllib.parse import urlsplit
 
 import httpx
 from bs4 import BeautifulSoup
@@ -118,6 +119,8 @@ async def _process(client: httpx.AsyncClient, rules, item: RawItem, stats: RunSt
                 return None, keys
         keys.append(real_key)
 
+    if not urlsplit(url).path.strip("/"):
+        return None, keys  # a site's front page, not an article
     headline = strip_media_suffix(item.title) if item.is_google_news else item.title.strip()
     body, author, published = html_to_text(item.content), item.author, item.published_at
     if len(body) < FEED_BODY_MIN_CHARS:

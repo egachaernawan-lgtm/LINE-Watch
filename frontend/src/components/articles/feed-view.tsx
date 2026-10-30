@@ -147,6 +147,15 @@ export function FeedView({ fixedCategory }: { fixedCategory?: Category }) {
         )}
       </Card>
 
+      {data?.total === 0 && fixedCategory === "LINE" && active.length === 0 && (
+        <Card className="p-6 text-center">
+          <div className="font-bold">No LINE coverage in this period</div>
+          <p className="mt-1 text-sm text-gray-700">
+            The monitor is checking Indonesian media continuously and found nothing about LINE, so no alert is needed. Competitor, industry and government coverage is on the other screens.
+          </p>
+        </Card>
+      )}
+
       <div className="text-sm text-gray-700">
         {data ? (
           <>
