@@ -19,8 +19,11 @@ import { usePathname } from "next/navigation";
 
 import { demoMode } from "@/lib/demo";
 
+// In the demo `/` redirects to the feed, so Home points at the dashboard's own route.
+const HOME = demoMode ? "/overview" : "/";
+
 const NAV: { href: string; label: string; icon: LucideIcon }[] = [
-  { href: "/", label: "Home", icon: Home },
+  { href: HOME, label: "Home", icon: Home },
   { href: "/feed", label: "Latest feed", icon: Radio },
   { href: "/coverage/line", label: "LINE coverage", icon: Newspaper },
   { href: "/coverage/competitor", label: "Competitors", icon: Swords },
@@ -89,7 +92,7 @@ export function MobileNav() {
   const pathname = usePathname();
   return (
     <nav className="fixed inset-x-0 bottom-0 z-20 flex justify-around border-t border-gray-200 bg-white px-1 py-1 lg:hidden">
-      {NAV.filter((n) => ["/", "/feed", "/coverage/line", "/media", "/reports"].includes(n.href)).map(({ href, label, icon: Icon }) => {
+      {NAV.filter((n) => [HOME, "/feed", "/coverage/line", "/media", "/reports"].includes(n.href)).map(({ href, label, icon: Icon }) => {
         const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
         return (
           <Link key={href} href={href} className={clsx("flex flex-1 flex-col items-center gap-0.5 rounded-md py-1.5 text-[11px] font-bold hover:no-underline", active ? "text-brand-dark" : "text-gray-500")}>
