@@ -1,4 +1,4 @@
-"""The Global Daily Monitoring email: LINE / Competitor / Industry / Government tables in the global format."""
+"""The Global Daily Monitoring report: LINE / Competitor / Industry / Government tables in the global format."""
 
 from dataclasses import dataclass
 from datetime import date
@@ -51,11 +51,12 @@ class Row:
 
 
 @dataclass
-class EmailReport:
+class DailyReport:
     on: date
     label: str
     subject: str
     html: str
+    sections: list[dict]  # [{"title", "rows": [{region, category, media, headline, url, summary}]}], every cell filled
     counts: dict[str, int]
     translated_all: bool  # False when Gemini ran out of quota and some headlines are still in Indonesian
 
@@ -103,13 +104,25 @@ def shown_articles(articles: list[Article]) -> list[Article]:
     return [a for _, category, _ in SECTIONS for a in [x for x in articles if x.category == category][:MAX_PER_SECTION]]
 
 
-def render_email(on: date, label: str, articles: list[Article]) -> tuple[str, dict[str, int]]:
+def render_report(on: date, label: str, articles: list[Article]) -> tuple[str, list[dict], dict[str, int]]:
     sections, counts = [], {}
     for title, category, with_summary in SECTIONS:
         items = [a for a in articles if a.category == category]
         counts[category.value] = len(items)
         sections.append({"title": title, "rows": build_rows(items, with_summary=with_summary)})
-    return render_html("email_daily.html", label=label, sections=sections, ending=ENDING), counts
+    html = render_html("daily_report.html", label=label, sections=sections, ending=ENDING)
+    # The downloads (CSV, Excel, PDF) repeat region and category on every row, unlike the HTML table that blanks repeats.
+    plain = [
+        {
+            "title": sec["title"],
+            "rows": [
+                {"region": r.region, "category": r.category, "media": r.media, "headline": r.headline, "url": r.url, "summary": r.summary}
+                for r in sec["rows"]
+            ],
+        }
+        for sec in sections
+    ]
+    return html, plain, counts
 
 
 async def ensure_english(session: AsyncSession, articles: list[Article]) -> bool:
@@ -140,18 +153,19 @@ async def ensure_english(session: AsyncSession, articles: list[Article]) -> bool
     return complete
 
 
-async def build_daily_email(session: AsyncSession, on: date | None = None, *, translate: bool = True) -> EmailReport:
+async def build_daily_report(session: AsyncSession, on: date | None = None, *, translate: bool = True) -> DailyReport:
     start, end, _ = daily_period(on)
     day = end.date()
     label = f"{day.day} {day:%B %Y}"
     articles = await articles_between(session, start, end)
     complete = await ensure_english(session, shown_articles(articles)) if translate else False
-    html, counts = render_email(day, label, articles)
-    return EmailReport(
+    html, sections, counts = render_report(day, label, articles)
+    return DailyReport(
         on=day,
         label=label,
         subject=f"[LINE WATCH] Global Daily Monitoring report - {label}",
         html=html,
+        sections=sections,
         counts=counts,
         translated_all=complete,
     )

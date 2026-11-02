@@ -15,8 +15,8 @@ Everything on screen is real: articles collected from Indonesian media, summaris
 4. **Competitors**. WhatsApp feature stories and security tips. "Share of voice and sentiment per competitor on the dashboard."
 5. **Home** (dashboard). Coverage volume, negative coverage about LINE, share of voice, top media.
 6. **Top media**. Which outlets write most about the topics we monitor.
-7. **Reports.** Preview the Global Daily Monitoring email (English headlines, LINE summaries, "Media (+N)"). Show **Recipient groups** (All employees, Comms team), pick a group, and send. Real sending needs the presenter's send code, so participants can try everything except the final send. History lists what went out.
-8. **Close.** "In production this also fills a Google Sheet and sends the daily report at 08:00 WIB. Today's demo is a read-only snapshot so it cannot fail on stage."
+7. **Reports.** Preview the Global Daily Monitoring report (English headlines, LINE summaries, "Media (+N)"), pick a date, then download it as PDF, Excel, CSV or HTML. Open the PDF and click a headline: it goes to the original article.
+8. **Close.** "In production this also fills a Google Sheet and builds the daily report at 08:00 WIB. Today's demo is a read-only snapshot so it cannot fail on stage."
 
 ## Likely questions
 
@@ -37,5 +37,5 @@ Everything on screen is real: articles collected from Indonesian media, summaris
 
 - Start Docker Desktop, then `docker compose up -d db`, and start the backend.
 - Run the ingestion 2-3 times (see README), then `python -m app.seed.export_snapshot --days 30` from `backend\`, commit and push `frontend/src/data/snapshot.json`.
-- Add your own test address to a group and send yourself one report to check the email arrives (Vercel needs DEMO_SEND_PASSCODE, SENDGRID_API_KEY, EMAIL_FROM).
+- On the Reports page download each format once (PDF, Excel, CSV, HTML) and open them.
 - Wait for Vercel to show Ready, open the production domain in a private window, click through every sidebar item and one Original Source link.

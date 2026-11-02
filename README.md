@@ -44,7 +44,7 @@ curl -X POST http://localhost:8000/internal/ingest -H "X-Internal-Key: <INTERNAL
 | `GEMINI_API_KEY` | Summaries, sentiment, importance, impact, actions |
 | Google service account JSON | Sheets + Drive. Share the Sheet with its email; put the reports folder in a **Shared Drive** and add the account |
 | `SHEETS_SPREADSHEET_ID`, `DRIVE_REPORTS_FOLDER_ID` | Targets |
-| `SENDGRID_API_KEY`, `EMAIL_FROM`, `REPORT_RECIPIENTS` | Report email |
+| `SENDGRID_API_KEY`, `EMAIL_FROM`, `REPORT_RECIPIENTS` | Optional scheduled report email (not used by the demo or the Reports menu) |
 
 Anything left blank is skipped with a message in the run result (ingestion still works without Gemini, Sheets, Drive or email).
 
@@ -74,10 +74,11 @@ The demo serves a snapshot of **real, analysed articles** from `frontend/src/dat
 
 Repeat steps 1-3 before the presentation to refresh the feed. Article bodies are cut to a 600-character excerpt; every card links to the original source.
 
-## Email reports (Global Daily Monitoring)
+## Reports (Global Daily Monitoring)
 
-**Reports** menu: preview the daily email, pick recipient groups (or paste extra addresses), send; manage groups; see the send history.
-The email follows the global format (Dear all / tables for LINE, Competitor, Industry, Government & policy / disclaimer). Headlines and LINE summaries are translated to English by Gemini the first time an article appears in a report (cached in `articles.headline_en`, `articles.summary_en`). `Media (+N)` counts other outlets that ran the same story.
+**Reports** menu: pick a day, check the preview, download it as **PDF, Excel (.xlsx), CSV or HTML**. Nothing is emailed.
+The report follows the global format (Dear all / tables for LINE, Competitor, Industry, Government & policy / disclaimer). Headlines and LINE summaries are translated to English by Gemini the first time an article appears in a report (cached in `articles.headline_en`, `articles.summary_en`). `Media (+N)` counts other outlets that ran the same story.
 
-- **Full app:** apply the new tables with `alembic upgrade head` (backend). Needs `SENDGRID_API_KEY` and `EMAIL_FROM` in `backend/.env`. Only admins can send or edit groups; "Send test to me" mails only the signed-in user. Endpoints: `GET /reports/daily/preview`, `POST /reports/daily/send`, `GET /reports/sends`, `/recipient-groups`.
-- **Vercel demo:** the emails are rendered at export time (`python -m app.seed.export_snapshot --report-days 7`). Groups and history live in the browser. To really send, set three Vercel variables: `DEMO_SEND_PASSCODE` (a code only the presenter knows), `SENDGRID_API_KEY`, `EMAIL_FROM` (a sender verified in SendGrid). Without all three, sending is off. The server mails the stored report HTML only, max 200 recipients per send.
+- The files are built in the browser from the report data (`frontend/src/lib/report-export.ts`), so the demo and the full app share one code path. PDF and Excel libraries load only when you click. Excel has one sheet per section with clickable headlines; CSV is one flat table (UTF-8 with BOM so Excel shows accents correctly); HTML is the standalone preview document.
+- **Full app:** `GET /reports/daily/preview?on=YYYY-MM-DD` returns the HTML plus the same content as rows. Run `alembic upgrade head` once (it also drops the unused recipient/send-log tables from the earlier email design).
+- **Vercel demo:** the reports are rendered at export time (`python -m app.seed.export_snapshot --report-days 7`). No email service or extra Vercel variables are needed.

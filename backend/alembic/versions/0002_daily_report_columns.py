@@ -1,4 +1,4 @@
-"""email reports: recipient groups, send log, article translation and duplicate-count columns
+"""daily report: article translation and duplicate-count columns
 
 Revision ID: 0002
 Revises: 0001
@@ -18,9 +18,8 @@ def upgrade() -> None:
     op.execute("ALTER TABLE articles ADD COLUMN IF NOT EXISTS duplicate_count integer NOT NULL DEFAULT 0")
     op.execute("ALTER TABLE articles ADD COLUMN IF NOT EXISTS headline_en text")
     op.execute("ALTER TABLE articles ADD COLUMN IF NOT EXISTS summary_en text")
-    Base.metadata.create_all(bind=op.get_bind())  # recipient_groups, recipients, email_sends (skips existing)
+    Base.metadata.create_all(bind=op.get_bind())
 
 
 def downgrade() -> None:
-    op.execute("DROP TABLE IF EXISTS email_sends, recipients, recipient_groups")
     op.execute("ALTER TABLE articles DROP COLUMN IF EXISTS summary_en, DROP COLUMN IF EXISTS headline_en, DROP COLUMN IF EXISTS duplicate_count")

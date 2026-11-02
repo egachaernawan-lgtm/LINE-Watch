@@ -1,11 +1,8 @@
 from datetime import date
 from types import SimpleNamespace
 
-import pytest
-
 from app.models import ArticleCategory as C
-from app.schemas.email import GroupIn, SendIn, clean_emails
-from app.services.reports.email_report import ENDING, build_rows, render_email, sub_category
+from app.services.reports.daily_report import ENDING, build_rows, render_report, sub_category
 
 
 def art(category, trigger, *, company=None, media="CNBC Indonesia", dup=0, en=None, summary_en=None, n=1):
@@ -34,8 +31,8 @@ def test_rows_group_by_category_blank_repeats_and_show_duplicates():
     assert rows[1].media == "CNBC Indonesia (+4)" and rows[0].summary is None
 
 
-def test_email_has_greeting_ending_links_and_english_text():
-    html, counts = render_email(
+def test_report_has_greeting_ending_links_and_english_text():
+    html, _, counts = render_report(
         date(2026, 11, 2), "2 November 2026",
         [art(C.LINE, "LINE Stickers", en="LINE launches stickers", summary_en="LINE added new stickers.")],
     )
@@ -48,16 +45,19 @@ def test_email_has_greeting_ending_links_and_english_text():
     assert counts == {"LINE": 1, "COMPETITOR": 0, "INDUSTRY": 0, "GOVERNMENT": 0}
 
 
-def test_email_escapes_html_in_headlines():
-    html, _ = render_email(date(2026, 11, 2), "d", [art(C.INDUSTRY, "AI", en="<script>alert(1)</script>")])
+def test_report_escapes_html_in_headlines():
+    html, _, _ = render_report(date(2026, 11, 2), "d", [art(C.INDUSTRY, "AI", en="<script>alert(1)</script>")])
     assert "<script>alert(1)</script>" not in html
 
 
-def test_clean_emails_normalises_dedupes_and_rejects_bad_addresses():
-    assert clean_emails([" A@Example.com ", "a@example.com", "", "b@x.co"]) == ["a@example.com", "b@x.co"]
-    with pytest.raises(ValueError):
-        clean_emails(["not-an-email"])
-    with pytest.raises(ValueError):
-        clean_emails(["a@b"])
-    assert GroupIn(name=" All ", emails=["X@y.com"]).name == "All"
-    assert SendIn(emails=["Z@y.com"]).emails == ["z@y.com"]
+def test_plain_rows_for_downloads_repeat_every_cell():
+    _, sections, _ = render_report(
+        date(2026, 11, 2), "d",
+        [art(C.COMPETITOR, "x", company="Meta", n=1), art(C.COMPETITOR, "x", company="Meta", dup=2, n=2)],
+    )
+    assert [s["title"] for s in sections] == ["LINE", "Competitor", "Industry", "Government & policy"]
+    rows = sections[1]["rows"]
+    assert [r["category"] for r in rows] == ["Meta", "Meta"]  # not blanked like the HTML table
+    assert [r["region"] for r in rows] == ["ID", "ID"]
+    assert rows[1]["media"] == "CNBC Indonesia (+2)" and rows[0]["url"] == "https://example.com/1"
+    assert sections[0]["rows"] == []

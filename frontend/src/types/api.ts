@@ -49,36 +49,27 @@ export interface Overview {
   last_collected_at: string | null;
 }
 
+export interface ReportRow {
+  region: string;
+  category: string;
+  media: string;
+  headline: string;
+  url: string;
+  summary: string | null;
+}
+
+export interface ReportSection {
+  title: string;
+  rows: ReportRow[];
+}
+
 export interface DailyPreview {
   date: string;
   label: string;
   subject: string;
-  html: string;
+  html: string; // the finished report as a standalone HTML document
+  sections: ReportSection[]; // the same content as plain rows, for the CSV / Excel / PDF downloads
+  ending: string;
   counts: Record<Category, number>;
   translated_all: boolean;
-}
-
-export interface RecipientGroup {
-  id: number;
-  name: string;
-  description: string | null;
-  emails: string[];
-}
-
-export interface SendLog {
-  id: number;
-  report_date: string;
-  subject: string;
-  recipient_count: number;
-  groups: string[] | null;
-  sent_by: string;
-  status: string;
-  error: string | null;
-  sent_at: string;
-}
-
-export interface SendResult {
-  status: string;
-  recipients: number;
-  subject: string;
 }
