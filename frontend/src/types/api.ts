@@ -49,13 +49,36 @@ export interface Overview {
   last_collected_at: string | null;
 }
 
-export interface Report {
+export interface DailyPreview {
+  date: string;
+  label: string;
+  subject: string;
+  html: string;
+  counts: Record<Category, number>;
+  translated_all: boolean;
+}
+
+export interface RecipientGroup {
   id: number;
-  kind: "daily" | "monthly";
-  period_start: string;
-  period_end: string;
-  gdoc_url: string | null;
-  pdf_url: string | null;
-  emailed_at: string | null;
-  created_at: string;
+  name: string;
+  description: string | null;
+  emails: string[];
+}
+
+export interface SendLog {
+  id: number;
+  report_date: string;
+  subject: string;
+  recipient_count: number;
+  groups: string[] | null;
+  sent_by: string;
+  status: string;
+  error: string | null;
+  sent_at: string;
+}
+
+export interface SendResult {
+  status: string;
+  recipients: number;
+  subject: string;
 }

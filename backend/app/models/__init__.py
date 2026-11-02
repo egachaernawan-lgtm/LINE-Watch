@@ -7,6 +7,7 @@ from app.models.base import (
     RecommendedAction,
     Sentiment,
 )
+from app.models.recipient import EmailSend, Recipient, RecipientGroup
 from app.models.report import IngestionRun, Report, SeenItem
 from app.models.source import Keyword, Source
 from app.models.user import User
@@ -17,9 +18,12 @@ __all__ = [
     "ArticleCategory",
     "ArticleKeywordHit",
     "Base",
+    "EmailSend",
     "IngestionRun",
     "Keyword",
     "Level",
+    "Recipient",
+    "RecipientGroup",
     "RecommendedAction",
     "Report",
     "SeenItem",

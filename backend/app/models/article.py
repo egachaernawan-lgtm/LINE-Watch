@@ -53,6 +53,11 @@ class Article(Base):
     category: Mapped[ArticleCategory] = mapped_column(_enum(ArticleCategory, "article_category"))
     company: Mapped[str | None] = mapped_column(Text)
     is_relevant: Mapped[bool] = mapped_column(server_default=text("true"))
+    # Other outlets that ran the same story (shown as "Media (+N)" in the email report)
+    duplicate_count: Mapped[int] = mapped_column(Integer, server_default=text("0"))
+    # English headline and one-paragraph summary, written when the article first goes into a report
+    headline_en: Mapped[str | None] = mapped_column(Text)
+    summary_en: Mapped[str | None] = mapped_column(Text)
 
     analysis_status: Mapped[AnalysisStatus] = mapped_column(
         _enum(AnalysisStatus, "analysis_status"), server_default=AnalysisStatus.PENDING.value

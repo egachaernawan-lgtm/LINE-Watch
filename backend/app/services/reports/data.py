@@ -10,6 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import get_settings
 from app.models import (
+    AnalysisStatus,
     Article,
     ArticleCategory,
     Level,
@@ -31,7 +32,10 @@ def sort_articles(articles: list[Article]) -> list[Article]:
 async def articles_between(session: AsyncSession, start: datetime, end: datetime) -> list[Article]:
     rows = await session.scalars(
         select(Article).where(
-            Article.is_relevant.is_(True), EFFECTIVE_TIME >= start, EFFECTIVE_TIME < end
+            Article.is_relevant.is_(True),
+            Article.analysis_status == AnalysisStatus.DONE,  # reports only carry analysed articles
+            EFFECTIVE_TIME >= start,
+            EFFECTIVE_TIME < end,
         )
     )
     return sort_articles(list(rows))

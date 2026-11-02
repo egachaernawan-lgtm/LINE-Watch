@@ -29,5 +29,21 @@ def batch_prompt(items: list[dict]) -> str:
     return "\n\n".join(articles) + "\n\nReturn exactly one result for every article above, using its id."
 
 
+TRANSLATE_SYSTEM = """You prepare entries for LINE's Global Daily Monitoring report, which is read in English.
+For every article return its id, headline_en and summary_en.
+- headline_en: the headline translated into natural English. Keep brand names, product names and people's names as written.
+- summary_en: ONE short paragraph of 2-3 factual sentences in English built from the summary points given. No bullets, no opinions,
+  and nothing that is not in the points."""
+
+
+def translate_prompt(items: list[dict]) -> str:
+    parts = [
+        f"=== ARTICLE id={i['id']} ===\nMedia: {i['media']}\nHeadline: {i['headline']}\nSummary points:\n"
+        + "\n".join(f"- {s}" for s in (i["summary"] or []))
+        for i in items
+    ]
+    return "\n\n".join(parts) + "\n\nReturn exactly one result for every article above, using its id."
+
+
 REPORT_NARRATIVE_SYSTEM = """You write concise, factual commentary for LINE Indonesia's monthly media report.
 Use only the numbers and headlines provided. No speculation beyond them. Write in English."""

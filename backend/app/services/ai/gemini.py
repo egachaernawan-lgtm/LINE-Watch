@@ -9,7 +9,13 @@ from tenacity import retry, retry_if_exception, stop_after_attempt, wait_exponen
 from app.core.config import get_settings
 from app.core.logging import get_logger
 from app.models import Level, RecommendedAction, Sentiment
-from app.services.ai.prompts import ANALYSIS_SYSTEM, REPORT_NARRATIVE_SYSTEM, batch_prompt
+from app.services.ai.prompts import (
+    ANALYSIS_SYSTEM,
+    REPORT_NARRATIVE_SYSTEM,
+    TRANSLATE_SYSTEM,
+    batch_prompt,
+    translate_prompt,
+)
 
 log = get_logger()
 
@@ -128,6 +134,26 @@ async def analyze_batch(items: list[dict]) -> dict[int, ItemAnalysis]:
             r.summary = [s.strip() for s in r.summary if s.strip()][:3]
             results[r.id] = r
     return results
+
+
+class Translation(BaseModel):
+    id: int
+    headline_en: str
+    summary_en: str
+
+
+class TranslationBatch(BaseModel):
+    results: list[Translation]
+
+
+async def translate_batch(items: list[dict]) -> dict[int, Translation]:
+    """English headline + summary paragraph for several articles in one request.
+
+    `items` are dicts with id, media, headline, summary (list of bullet strings).
+    """
+    wanted = {i["id"] for i in items}
+    out: TranslationBatch = await _generate(TRANSLATE_SYSTEM, translate_prompt(items), TranslationBatch)
+    return {r.id: r for r in out.results if r.id in wanted and r.headline_en.strip()}
 
 
 async def monthly_narrative(facts: str) -> MonthlyNarrative:

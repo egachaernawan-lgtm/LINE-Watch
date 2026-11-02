@@ -11,7 +11,7 @@ from urllib.parse import urlsplit
 
 import httpx
 from bs4 import BeautifulSoup
-from sqlalchemy import delete, select, text
+from sqlalchemy import delete, select, text, update
 from sqlalchemy.dialects.postgresql import insert as pg_insert
 
 from app.core.config import get_settings
@@ -142,19 +142,21 @@ async def _process(client: httpx.AsyncClient, rules, item: RawItem, stats: RunSt
 async def _store(session, candidates: list[Candidate], stats: RunStats) -> None:
     window = datetime.now(timezone.utc) - timedelta(hours=get_settings().title_dedupe_hours)
     fingerprints = {c.headline: title_fingerprint(c.headline) for c in candidates}
-    recent = set(
-        (
-            await session.scalars(
-                select(Article.title_fingerprint).where(
-                    Article.collected_at >= window, Article.title_fingerprint.in_(set(fingerprints.values()))
-                )
+    kept = (
+        await session.execute(
+            select(Article.title_fingerprint, Article.id).where(
+                Article.collected_at >= window, Article.title_fingerprint.in_(set(fingerprints.values()))
             )
-        ).all()
-    )
+        )
+    ).all()
+    recent: dict[str, int] = {fp: article_id for fp, article_id in kept}  # fingerprint -> article we kept
     for cand in candidates:
         fp = fingerprints[cand.headline]
         if fp in recent:
             stats.duplicates += 1  # same story already collected (syndication / repost)
+            await session.execute(
+                update(Article).where(Article.id == recent[fp]).values(duplicate_count=Article.duplicate_count + 1)
+            )
             continue
         stmt = (
             pg_insert(Article)
@@ -179,7 +181,7 @@ async def _store(session, candidates: list[Candidate], stats: RunStats) -> None:
         if article_id is None:
             stats.duplicates += 1
             continue
-        recent.add(fp)
+        recent[fp] = article_id
         stats.inserted += 1
         session.add_all(ArticleKeywordHit(article_id=article_id, keyword_id=k) for k in cand.match.keyword_ids)
 

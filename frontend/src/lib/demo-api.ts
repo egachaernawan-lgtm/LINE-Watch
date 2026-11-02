@@ -1,11 +1,11 @@
 import rawSnapshot from "@/data/snapshot.json";
-import type { ArticleDetail, ArticlePage, CountItem, Overview, Report } from "@/types/api";
+import type { ArticleDetail, ArticlePage, CountItem, DailyPreview, Overview } from "@/types/api";
 
 // Same endpoints and response shapes as the FastAPI backend, computed from the exported snapshot.
 interface Snapshot {
   generated_at: string | null;
   articles: ArticleDetail[];
-  reports: Report[];
+  reports: DailyPreview[]; // daily emails rendered at export time, newest first
 }
 
 const snapshot = rawSnapshot as unknown as Snapshot;
@@ -78,6 +78,11 @@ function overview(days: number): Overview {
   };
 }
 
+/** The rendered daily email for a date ("YYYY-MM-DD"), or null. The send route mails exactly this HTML. */
+export function getDemoReport(date: string): DailyPreview | null {
+  return snapshot.reports.find((r) => r.date === date) ?? null;
+}
+
 /** Returns the JSON body, or null for an unknown endpoint / article. */
 export function demoResponse(path: string[], params: Params): unknown | null {
   const [resource, sub] = path;
@@ -85,7 +90,8 @@ export function demoResponse(path: string[], params: Params): unknown | null {
   if (resource === "articles" && sub === "media") return [...new Set(articles.map((a) => a.media_name))].sort();
   if (resource === "articles" && sub) return articles.find((a) => String(a.id) === sub) ?? null;
   if (resource === "stats" && sub === "overview") return overview(Math.min(365, Math.max(1, Number(params.get("days")) || 7)));
-  if (resource === "reports") return snapshot.reports;
+  if (resource === "reports" && sub === "days") return snapshot.reports.map((r) => r.date);
+  if (resource === "reports" && sub === "daily" && path[2] === "preview") return getDemoReport(params.get("on") ?? "");
   if (resource === "meta") return { generated_at: snapshot.generated_at, articles: articles.length };
   return null;
 }

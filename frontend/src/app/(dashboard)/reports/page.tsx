@@ -1,53 +1,48 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { FileDown, FileText } from "lucide-react";
+import clsx from "clsx";
+import { useState } from "react";
 
+import { GroupsPanel } from "@/components/reports/groups-panel";
+import { HistoryPanel } from "@/components/reports/history-panel";
+import { SendPanel } from "@/components/reports/send-panel";
 import { Topbar } from "@/components/layout/topbar";
-import { Card } from "@/components/ui/card";
-import { EmptyState, ErrorState, Skeleton } from "@/components/ui/states";
-import { Tag } from "@/components/ui/tag";
-import { api } from "@/lib/api";
-import { formatDateTime } from "@/lib/format";
-import type { Report } from "@/types/api";
+
+const TABS = [
+  { id: "send", label: "Send report" },
+  { id: "groups", label: "Recipient groups" },
+  { id: "history", label: "History" },
+] as const;
 
 export default function ReportsPage() {
-  const { data, error, isLoading } = useQuery({ queryKey: ["reports"], queryFn: () => api<Report[]>("reports") });
+  const [tab, setTab] = useState<(typeof TABS)[number]["id"]>("send");
 
   return (
     <>
       <Topbar title="Reports" />
       <main className="space-y-4 p-4 lg:p-8">
-        <p className="text-sm text-gray-700">Daily reports are issued at 08:00 WIB and monthly reports on the 1st of each month.</p>
-        {error && <ErrorState />}
-        {isLoading && <Skeleton className="h-40" />}
-        {data && data.length === 0 && (
-          <Card>
-            <EmptyState title="No reports yet">The first daily report is created at 08:00 WIB.</EmptyState>
-          </Card>
-        )}
-        {data && data.length > 0 && (
-          <Card className="divide-y divide-gray-200">
-            {data.map((r) => (
-              <div key={r.id} className="flex flex-wrap items-center gap-3 px-5 py-4">
-                <FileText className="h-5 w-5 text-gray-500" />
-                <div className="min-w-0 flex-1">
-                  <div className="font-bold">
-                    {r.kind === "daily" ? "Daily" : "Monthly"} report · {formatDateTime(r.period_start)}
-                  </div>
-                  <div className="text-xs text-gray-500">Created {formatDateTime(r.created_at)}</div>
-                </div>
-                {r.emailed_at && <Tag tone="positive">Emailed</Tag>}
-                {r.gdoc_url && <a href={r.gdoc_url} target="_blank" rel="noopener noreferrer" className="text-sm font-bold">Google Doc</a>}
-                {r.pdf_url && (
-                  <a href={r.pdf_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-bold">
-                    <FileDown className="h-4 w-4" /> PDF
-                  </a>
-                )}
-              </div>
-            ))}
-          </Card>
-        )}
+        <p className="text-sm text-gray-700">
+          The Global Daily Monitoring report covers the 24 hours before 08:00 WIB. Preview it, then email it to everyone or to specific groups.
+        </p>
+        <div role="tablist" className="inline-flex rounded-md bg-gray-100 p-1">
+          {TABS.map((t) => (
+            <button
+              key={t.id}
+              role="tab"
+              aria-selected={tab === t.id}
+              onClick={() => setTab(t.id)}
+              className={clsx(
+                "h-9 rounded-md px-4 text-sm font-bold transition duration-[120ms]",
+                tab === t.id ? "bg-white text-gray-900 shadow-sm" : "text-gray-700 hover:text-gray-900",
+              )}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
+        {tab === "send" && <SendPanel />}
+        {tab === "groups" && <GroupsPanel />}
+        {tab === "history" && <HistoryPanel />}
       </main>
     </>
   );

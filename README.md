@@ -73,3 +73,11 @@ The demo serves a snapshot of **real, analysed articles** from `frontend/src/dat
 4. Vercel project: root directory `frontend`, environment variable `NEXT_PUBLIC_DEMO_MODE=true` (nothing else needed).
 
 Repeat steps 1-3 before the presentation to refresh the feed. Article bodies are cut to a 600-character excerpt; every card links to the original source.
+
+## Email reports (Global Daily Monitoring)
+
+**Reports** menu: preview the daily email, pick recipient groups (or paste extra addresses), send; manage groups; see the send history.
+The email follows the global format (Dear all / tables for LINE, Competitor, Industry, Government & policy / disclaimer). Headlines and LINE summaries are translated to English by Gemini the first time an article appears in a report (cached in `articles.headline_en`, `articles.summary_en`). `Media (+N)` counts other outlets that ran the same story.
+
+- **Full app:** apply the new tables with `alembic upgrade head` (backend). Needs `SENDGRID_API_KEY` and `EMAIL_FROM` in `backend/.env`. Only admins can send or edit groups; "Send test to me" mails only the signed-in user. Endpoints: `GET /reports/daily/preview`, `POST /reports/daily/send`, `GET /reports/sends`, `/recipient-groups`.
+- **Vercel demo:** the emails are rendered at export time (`python -m app.seed.export_snapshot --report-days 7`). Groups and history live in the browser. To really send, set three Vercel variables: `DEMO_SEND_PASSCODE` (a code only the presenter knows), `SENDGRID_API_KEY`, `EMAIL_FROM` (a sender verified in SendGrid). Without all three, sending is off. The server mails the stored report HTML only, max 200 recipients per send.

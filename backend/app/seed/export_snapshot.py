@@ -11,11 +11,14 @@ import asyncio
 import json
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 from sqlalchemy import func, select
 
+from app.core.config import get_settings
 from app.core.db import SessionLocal
 from app.models import AnalysisStatus, Article
+from app.services.reports.email_report import build_daily_email
 
 BODY_EXCERPT_CHARS = 600  # the demo links to the original; it does not republish full articles
 DEFAULT_OUT = Path(__file__).resolve().parents[3] / "frontend" / "src" / "data" / "snapshot.json"
@@ -25,7 +28,24 @@ def _value(x):
     return getattr(x, "value", x)
 
 
-async def export(days: int, out: Path) -> None:
+async def build_reports(report_days: int) -> list[dict]:
+    """The daily email for each of the last `report_days` days that has coverage, already rendered."""
+    reports = []
+    today = datetime.now(timezone.utc).astimezone(ZoneInfo(get_settings().timezone)).date()
+    async with SessionLocal() as session:
+        for back in range(report_days):
+            r = await build_daily_email(session, today - timedelta(days=back))
+            if sum(r.counts.values()) == 0:
+                continue
+            reports.append(
+                {"date": r.on.isoformat(), "label": r.label, "subject": r.subject, "html": r.html,
+                 "counts": r.counts, "translated_all": r.translated_all}
+            )
+            print(f"  report {r.on}: {r.counts}" + ("" if r.translated_all else "  (some headlines not translated: quota)"))
+    return reports
+
+
+async def export(days: int, report_days: int, out: Path) -> None:
     since = datetime.now(timezone.utc) - timedelta(days=days)
     effective = func.coalesce(Article.published_at, Article.collected_at)
     async with SessionLocal() as session:
@@ -63,11 +83,13 @@ async def export(days: int, out: Path) -> None:
         }
         for a in rows
     ]
-    snapshot = {"generated_at": datetime.now(timezone.utc).isoformat(), "articles": articles, "reports": []}
+    print("Rendering daily emails (English translation uses a few Gemini requests the first time)...")
+    reports = await build_reports(report_days)
+    snapshot = {"generated_at": datetime.now(timezone.utc).isoformat(), "articles": articles, "reports": reports}
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(snapshot, ensure_ascii=False, indent=1), encoding="utf-8")
 
-    print(f"Wrote {len(articles)} analysed articles (last {days} days) to {out}")
+    print(f"Wrote {len(articles)} analysed articles and {len(reports)} daily emails to {out}")
     if not articles:
         print("Nothing to export: run an ingestion and the analysis first (see README).")
         return
@@ -80,9 +102,10 @@ async def export(days: int, out: Path) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--days", type=int, default=14, help="how far back to export (default 14)")
+    parser.add_argument("--report-days", type=int, default=7, help="how many daily emails to render (default 7)")
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     args = parser.parse_args()
-    asyncio.run(export(args.days, args.out))
+    asyncio.run(export(args.days, args.report_days, args.out))
 
 
 if __name__ == "__main__":
