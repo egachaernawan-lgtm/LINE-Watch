@@ -18,6 +18,7 @@ from sqlalchemy import func, select
 from app.core.config import get_settings
 from app.core.db import SessionLocal
 from app.models import AnalysisStatus, Article
+from app.seed.export_live_config import write as write_live_config
 from app.services.reports.daily_report import ENDING, build_daily_report
 
 BODY_EXCERPT_CHARS = 600  # the demo links to the original; it does not republish full articles
@@ -46,6 +47,7 @@ async def build_reports(report_days: int) -> list[dict]:
 
 
 async def export(days: int, report_days: int, out: Path) -> None:
+    write_live_config()  # keywords + feeds for the demo's Fetch latest news button
     since = datetime.now(timezone.utc) - timedelta(days=days)
     effective = func.coalesce(Article.published_at, Article.collected_at)
     async with SessionLocal() as session:

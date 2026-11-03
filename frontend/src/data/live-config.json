@@ -1,0 +1,396 @@
+{
+ "keywords": [
+  {
+   "term": "LINE",
+   "category": "LINE",
+   "company": "LINE",
+   "aliases": [],
+   "case_sensitive": true
+  },
+  {
+   "term": "LINE Indonesia",
+   "category": "LINE",
+   "company": "LINE",
+   "aliases": [],
+   "case_sensitive": false
+  },
+  {
+   "term": "LINE TODAY",
+   "category": "LINE",
+   "company": "LINE",
+   "aliases": [],
+   "case_sensitive": false
+  },
+  {
+   "term": "LINE VOOM",
+   "category": "LINE",
+   "company": "LINE",
+   "aliases": [],
+   "case_sensitive": false
+  },
+  {
+   "term": "LINE Official Account",
+   "category": "LINE",
+   "company": "LINE",
+   "aliases": [
+    "LINE OA"
+   ],
+   "case_sensitive": false
+  },
+  {
+   "term": "LINE Stickers",
+   "category": "LINE",
+   "company": "LINE",
+   "aliases": [
+    "LINE Sticker",
+    "stiker LINE"
+   ],
+   "case_sensitive": false
+  },
+  {
+   "term": "LINE Creators Market",
+   "category": "LINE",
+   "company": "LINE",
+   "aliases": [],
+   "case_sensitive": false
+  },
+  {
+   "term": "LINE Pay",
+   "category": "LINE",
+   "company": "LINE",
+   "aliases": [],
+   "case_sensitive": false
+  },
+  {
+   "term": "LINE MAN",
+   "category": "LINE",
+   "company": "LINE",
+   "aliases": [
+    "LINE MAN Wongnai"
+   ],
+   "case_sensitive": false
+  },
+  {
+   "term": "LY Corporation",
+   "category": "LINE",
+   "company": "LINE",
+   "aliases": [
+    "LY Corp",
+    "LINE Yahoo",
+    "LINE Yahoo Corp"
+   ],
+   "case_sensitive": false
+  },
+  {
+   "term": "WhatsApp",
+   "category": "COMPETITOR",
+   "company": "WhatsApp",
+   "aliases": [],
+   "case_sensitive": false
+  },
+  {
+   "term": "Telegram",
+   "category": "COMPETITOR",
+   "company": "Telegram",
+   "aliases": [],
+   "case_sensitive": false
+  },
+  {
+   "term": "WeChat",
+   "category": "COMPETITOR",
+   "company": "WeChat",
+   "aliases": [],
+   "case_sensitive": false
+  },
+  {
+   "term": "Facebook Messenger",
+   "category": "COMPETITOR",
+   "company": "Facebook Messenger",
+   "aliases": [
+    "Messenger Facebook",
+    "Meta Messenger"
+   ],
+   "case_sensitive": false
+  },
+  {
+   "term": "KakaoTalk",
+   "category": "COMPETITOR",
+   "company": "KakaoTalk",
+   "aliases": [
+    "Kakao Talk"
+   ],
+   "case_sensitive": false
+  },
+  {
+   "term": "Messaging Apps",
+   "category": "INDUSTRY",
+   "company": null,
+   "aliases": [
+    "messaging app",
+    "aplikasi pesan",
+    "aplikasi chat",
+    "aplikasi perpesanan"
+   ],
+   "case_sensitive": false
+  },
+  {
+   "term": "Social Media",
+   "category": "INDUSTRY",
+   "company": null,
+   "aliases": [
+    "media sosial"
+   ],
+   "case_sensitive": false
+  },
+  {
+   "term": "Creator Economy",
+   "category": "INDUSTRY",
+   "company": null,
+   "aliases": [
+    "ekonomi kreator",
+    "content creator",
+    "kreator konten"
+   ],
+   "case_sensitive": false
+  },
+  {
+   "term": "Digital Trust",
+   "category": "INDUSTRY",
+   "company": null,
+   "aliases": [
+    "kepercayaan digital"
+   ],
+   "case_sensitive": false
+  },
+  {
+   "term": "Online Safety",
+   "category": "INDUSTRY",
+   "company": null,
+   "aliases": [
+    "keamanan online",
+    "keselamatan daring",
+    "keamanan daring"
+   ],
+   "case_sensitive": false
+  },
+  {
+   "term": "Privacy",
+   "category": "INDUSTRY",
+   "company": null,
+   "aliases": [
+    "privasi",
+    "data privacy"
+   ],
+   "case_sensitive": false
+  },
+  {
+   "term": "Cybersecurity",
+   "category": "INDUSTRY",
+   "company": null,
+   "aliases": [
+    "keamanan siber",
+    "kejahatan siber",
+    "serangan siber"
+   ],
+   "case_sensitive": false
+  },
+  {
+   "term": "Artificial Intelligence",
+   "category": "INDUSTRY",
+   "company": null,
+   "aliases": [
+    "kecerdasan buatan",
+    "AI generatif",
+    "generative AI"
+   ],
+   "case_sensitive": false
+  },
+  {
+   "term": "Fintech",
+   "category": "INDUSTRY",
+   "company": null,
+   "aliases": [
+    "financial technology",
+    "teknologi finansial"
+   ],
+   "case_sensitive": false
+  },
+  {
+   "term": "Digital Payments",
+   "category": "INDUSTRY",
+   "company": null,
+   "aliases": [
+    "pembayaran digital",
+    "dompet digital",
+    "e-wallet",
+    "QRIS"
+   ],
+   "case_sensitive": false
+  },
+  {
+   "term": "E-commerce",
+   "category": "INDUSTRY",
+   "company": null,
+   "aliases": [
+    "ecommerce",
+    "perdagangan elektronik"
+   ],
+   "case_sensitive": false
+  },
+  {
+   "term": "Digital Platforms",
+   "category": "INDUSTRY",
+   "company": null,
+   "aliases": [
+    "platform digital"
+   ],
+   "case_sensitive": false
+  },
+  {
+   "term": "Komdigi",
+   "category": "GOVERNMENT",
+   "company": null,
+   "aliases": [
+    "Kementerian Komunikasi dan Digital",
+    "Kemkomdigi",
+    "Kominfo"
+   ],
+   "case_sensitive": false
+  },
+  {
+   "term": "OJK",
+   "category": "GOVERNMENT",
+   "company": null,
+   "aliases": [
+    "Otoritas Jasa Keuangan"
+   ],
+   "case_sensitive": true
+  },
+  {
+   "term": "Bank Indonesia",
+   "category": "GOVERNMENT",
+   "company": null,
+   "aliases": [],
+   "case_sensitive": false
+  },
+  {
+   "term": "KPPU",
+   "category": "GOVERNMENT",
+   "company": null,
+   "aliases": [
+    "Komisi Pengawas Persaingan Usaha"
+   ],
+   "case_sensitive": false
+  },
+  {
+   "term": "PDP Law",
+   "category": "GOVERNMENT",
+   "company": null,
+   "aliases": [
+    "UU PDP",
+    "Pelindungan Data Pribadi",
+    "Perlindungan Data Pribadi"
+   ],
+   "case_sensitive": false
+  },
+  {
+   "term": "Digital Platform Regulation",
+   "category": "GOVERNMENT",
+   "company": null,
+   "aliases": [
+    "regulasi platform digital",
+    "aturan platform digital",
+    "regulasi platform"
+   ],
+   "case_sensitive": false
+  },
+  {
+   "term": "Cybersecurity Regulation",
+   "category": "GOVERNMENT",
+   "company": null,
+   "aliases": [
+    "regulasi keamanan siber",
+    "RUU Keamanan dan Ketahanan Siber",
+    "RUU KKS"
+   ],
+   "case_sensitive": false
+  },
+  {
+   "term": "Online Safety Policy",
+   "category": "GOVERNMENT",
+   "company": null,
+   "aliases": [
+    "kebijakan keamanan online",
+    "perlindungan anak di ruang digital",
+    "regulasi keamanan online"
+   ],
+   "case_sensitive": false
+  }
+ ],
+ "feeds": [
+  {
+   "media": "Antara News",
+   "url": "https://www.antaranews.com/rss/terkini.xml"
+  },
+  {
+   "media": "Antara News",
+   "url": "https://www.antaranews.com/rss/tekno.xml"
+  },
+  {
+   "media": "Antara News",
+   "url": "https://www.antaranews.com/rss/ekonomi.xml"
+  },
+  {
+   "media": "CNBC Indonesia",
+   "url": "https://www.cnbcindonesia.com/rss"
+  },
+  {
+   "media": "CNBC Indonesia",
+   "url": "https://www.cnbcindonesia.com/tech/rss"
+  },
+  {
+   "media": "CNN Indonesia",
+   "url": "https://www.cnnindonesia.com/teknologi/rss"
+  },
+  {
+   "media": "CNN Indonesia",
+   "url": "https://www.cnnindonesia.com/ekonomi/rss"
+  },
+  {
+   "media": "Tempo",
+   "url": "https://rss.tempo.co/"
+  },
+  {
+   "media": "Liputan6",
+   "url": "https://feed.liputan6.com/rss/tekno"
+  },
+  {
+   "media": "Republika",
+   "url": "https://www.republika.co.id/rss"
+  },
+  {
+   "media": "Sindonews",
+   "url": "https://www.sindonews.com/feed"
+  },
+  {
+   "media": "Okezone",
+   "url": "https://sindikasi.okezone.com/index.php/rss/1/RSS2.0"
+  },
+  {
+   "media": "Katadata",
+   "url": "https://katadata.co.id/rss"
+  },
+  {
+   "media": "DailySocial",
+   "url": "https://dailysocial.id/feed"
+  },
+  {
+   "media": "Selular.id",
+   "url": "https://selular.id/feed/"
+  },
+  {
+   "media": "Gizmologi",
+   "url": "https://www.gizmologi.id/feed/"
+  }
+ ]
+}

@@ -8,12 +8,14 @@ import { useState } from "react";
 import { ArticleCard } from "@/components/articles/article-card";
 import { RankList } from "@/components/charts/rank-list";
 import { VolumeChart } from "@/components/charts/volume-chart";
+import { LiveFetchCard } from "@/components/home/live-fetch-card";
 import { Topbar } from "@/components/layout/topbar";
 import { Card, CardTitle } from "@/components/ui/card";
 import { SentimentBar } from "@/components/ui/sentiment-bar";
 import { StatTile } from "@/components/ui/stat-tile";
 import { ErrorState, Skeleton } from "@/components/ui/states";
 import { api } from "@/lib/api";
+import { demoMode } from "@/lib/demo";
 import { timeAgo } from "@/lib/format";
 import type { ArticlePage, Overview } from "@/types/api";
 
@@ -55,6 +57,8 @@ export default function HomePage() {
           </div>
           {o?.last_collected_at && <span className="text-sm text-gray-700">Last article collected {timeAgo(o.last_collected_at)}</span>}
         </div>
+
+        {demoMode && <LiveFetchCard />}
 
         {o && o.negative_recent > 0 && (
           <div role="status" className="flex items-center gap-3 rounded-md bg-warning-tint p-4 text-sm">
