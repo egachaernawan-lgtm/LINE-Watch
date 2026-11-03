@@ -73,3 +73,26 @@ export interface DailyPreview {
   counts: Record<Category, number>;
   translated_all: boolean;
 }
+
+/** An article read live from a publisher's feed by the demo's "Fetch latest news" button: not analysed by Gemini. */
+export interface LiveArticle {
+  headline: string;
+  url: string;
+  media_name: string;
+  published_at: string | null;
+  category: Category;
+  company: string | null;
+  keyword_trigger: string;
+  excerpt: string;
+}
+
+export interface LiveFetchResult {
+  fetched_at: string;
+  feeds_total: number;
+  feeds_ok: number;
+  scanned: number; // items from the last 48 hours
+  matched: number; // of those, matching a monitoring keyword
+  already_known: number; // matched but already in the snapshot (or twice in this fetch)
+  total_new: number;
+  articles: LiveArticle[]; // best-first, at most 30
+}

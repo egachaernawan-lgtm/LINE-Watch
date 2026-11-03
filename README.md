@@ -74,6 +74,13 @@ The demo serves a snapshot of **real, analysed articles** from `frontend/src/dat
 
 Repeat steps 1-3 before the presentation to refresh the feed. Article bodies are cut to a 600-character excerpt; every card links to the original source.
 
+## Fetch latest news button (demo)
+
+The Home page has a **Fetch latest news** button. It calls `/api/fetch-latest`, a Vercel server function that reads the 16 direct publisher RSS feeds right now, keeps items from the last 48 hours that match the keywords, and drops anything already in the snapshot. Results show as "Not analysed yet" with a link to the original; nothing is stored and Gemini is not used, so it costs nothing and cannot use up the quota. The CDN reuses one answer for 2 minutes, so a crowd clicking together makes one round of requests to the publishers.
+
+- Outlets that only have a Google News feed (Detik, Kompas, Kontan, ...) are not included: their links need the decoding the Python collector does.
+- Keywords and feeds come from `backend/app/seed/keywords.yaml` and `sources.yaml` via `frontend/src/data/live-config.json`. After editing either yaml, run `python -m app.seed.export_live_config` (`export_snapshot` does it too) and commit the JSON.
+
 ## Reports (Global Daily Monitoring)
 
 **Reports** menu: pick a day, check the preview, download it as **PDF, Excel (.xlsx), CSV or HTML**. Nothing is emailed.

@@ -13,7 +13,7 @@ Everything on screen is real: articles collected from Indonesian media, summaris
 3. **LINE coverage** (sidebar). The UMEUS sticker launch, covered by Selular.ID, Nextren, Olenka and indotelko.com, plus the LINE Indonesia creators story. "LINE items are analysed first, so they are never stuck behind other news."
    - If a period has no LINE news the page says so: "no alert needed".
 4. **Competitors**. WhatsApp feature stories and security tips. "Share of voice and sentiment per competitor on the dashboard."
-5. **Home** (dashboard). Coverage volume, negative coverage about LINE, share of voice, top media.
+5. **Home** (dashboard). Click **Fetch latest news**: it reads the media feeds live (about 5 seconds) and shows what is new in the last hours, each linked to the original. Invite a participant to click it. "In production Gemini then analyses each one." Then the dashboard numbers: Coverage volume, negative coverage about LINE, share of voice, top media.
 6. **Top media**. Which outlets write most about the topics we monitor.
 7. **Reports.** Preview the Global Daily Monitoring report (English headlines, LINE summaries, "Media (+N)"), pick a date, then download it as PDF, Excel, CSV or HTML. Open the PDF and click a headline: it goes to the original article.
 8. **Close.** "In production this also fills a Google Sheet and builds the daily report at 08:00 WIB. Today's demo is a read-only snapshot so it cannot fail on stage."
