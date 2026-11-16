@@ -65,6 +65,7 @@ export function FeedView({ fixedCategory }: { fixedCategory?: Category }) {
     importance: get("importance"),
     media: get("media"),
     company: get("company"),
+    topic: get("topic"),
     q: get("q"),
     date_from: period !== "all" ? new Date(Date.now() - Number(period) * 86_400_000).toISOString() : "",
   };
@@ -82,6 +83,7 @@ export function FeedView({ fixedCategory }: { fixedCategory?: Category }) {
     get("importance") && { key: "importance", label: `${get("importance").toLowerCase()} importance` },
     get("media") && { key: "media", label: get("media") },
     get("company") && { key: "company", label: get("company") },
+    get("topic") && { key: "topic", label: get("topic").replace("/", " · ") },
   ].filter(Boolean) as { key: string; label: string }[];
 
   const pages = data ? Math.max(1, Math.ceil(data.total / PAGE_SIZE)) : 1;

@@ -24,6 +24,7 @@ from app.services.ingestion.extractor import fetch_article
 from app.services.ingestion.fetchers.google_news import decode_link, fetch_google_news
 from app.services.ingestion.fetchers.rss import fetch_rss
 from app.services.ingestion.raw import RawItem
+from app.services.ingestion.region import is_indonesian_url
 
 log = get_logger()
 LOCK_KEY = 7_315_001
@@ -119,6 +120,8 @@ async def _process(client: httpx.AsyncClient, rules, item: RawItem, stats: RunSt
                 return None, keys
         keys.append(real_key)
 
+    if not is_indonesian_url(url):
+        return None, keys  # Indonesian media only (marked seen so it is not fetched again)
     if not urlsplit(url).path.strip("/"):
         return None, keys  # a site's front page, not an article
     headline = strip_media_suffix(item.title) if item.is_google_news else item.title.strip()
@@ -173,6 +176,7 @@ async def _store(session, candidates: list[Candidate], stats: RunStats) -> None:
                 keyword_trigger=cand.match.trigger,
                 category=cand.match.category,
                 company=cand.match.company,
+                topic_id=cand.match.topic_id,
             )
             .on_conflict_do_nothing(index_elements=["url_hash"])
             .returning(Article.id)

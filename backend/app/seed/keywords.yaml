@@ -1,40 +1,97 @@
+# Search terms. Each points at one topic in topics.yaml (`topic: "<group>/<name>"`).
 # category priority when an article matches several: LINE > COMPETITOR > GOVERNMENT > INDUSTRY
 # case_sensitive: true for short/ambiguous terms (a bare "line" is not LINE).
-- {term: "LINE", category: LINE, company: LINE, case_sensitive: true}
-- {term: "LINE Indonesia", category: LINE, company: LINE}
-- {term: "LINE TODAY", category: LINE, company: LINE}
-- {term: "LINE VOOM", category: LINE, company: LINE}
-- {term: "LINE Official Account", category: LINE, company: LINE, aliases: ["LINE OA"]}
-- {term: "LINE Stickers", category: LINE, company: LINE, aliases: ["LINE Sticker", "stiker LINE"]}
-- {term: "LINE Creators Market", category: LINE, company: LINE}
-- {term: "LINE Pay", category: LINE, company: LINE}
-- {term: "LINE MAN", category: LINE, company: LINE, aliases: ["LINE MAN Wongnai"]}
-- {term: "LY Corporation", category: LINE, company: LINE, aliases: ["LY Corp", "LINE Yahoo", "LINE Yahoo Corp"]}
+# scope: lead = only counts when it is in the headline or the first paragraph (default for INDUSTRY/GOVERNMENT);
+#        anywhere = counts anywhere in the article (default for LINE and COMPETITOR).
+#        Broad competitor names (Google, Meta, ...) use lead so they do not flood the feed.
 
-- {term: "WhatsApp", category: COMPETITOR, company: WhatsApp}
-- {term: "Telegram", category: COMPETITOR, company: Telegram}
-- {term: "WeChat", category: COMPETITOR, company: WeChat}
-- {term: "Facebook Messenger", category: COMPETITOR, company: Facebook Messenger, aliases: ["Messenger Facebook", "Meta Messenger"]}
-- {term: "KakaoTalk", category: COMPETITOR, company: KakaoTalk, aliases: ["Kakao Talk"]}
+# ---- LINE: Business
+- {term: "LINE", category: LINE, company: LINE, case_sensitive: true, topic: "Business/General"}
+- {term: "LINE Indonesia", category: LINE, company: LINE, topic: "Business/General"}
+- {term: "LY Corporation", category: LINE, company: LINE, aliases: ["LY Corp", "LINE Yahoo", "LINE Yahoo Corp", "LINE Corporation"], topic: "Business/Corporate"}
+- {term: "NAVER", category: LINE, company: LINE, aliases: ["Naver Corp", "Naver Corporation"], topic: "Business/NAVER"}
+- {term: "IPX", category: LINE, company: LINE, case_sensitive: true, aliases: ["IPX Corporation"], topic: "Business/IPX"}
+# ---- LINE: Tech
+- {term: "HyperCLOVA X", category: LINE, company: LINE, aliases: ["HyperCLOVA"], topic: "Tech/AI"}
+- {term: "LINE Blockchain", category: LINE, company: LINE, topic: "Service/Crypto/Blockchain"}
+- {term: "LINE Developer Day", category: LINE, company: LINE, aliases: ["LINE DEVDAY"], topic: "Tech/General"}
+# ---- LINE: Service
+- {term: "LINE Messenger", category: LINE, company: LINE, aliases: ["aplikasi LINE", "LINE Openchat", "LINE Theme", "LINE Alert"], topic: "Service/Messenger"}
+- {term: "LINE Official Account", category: LINE, company: LINE, aliases: ["LINE OA"], topic: "Service/LINE OA"}
+- {term: "LINE Stickers", category: LINE, company: LINE, aliases: ["LINE Sticker", "stiker LINE"], topic: "Service/LINE STICKERS"}
+- {term: "LINE VOOM", category: LINE, company: LINE, topic: "Service/LINE VOOM"}
+- {term: "LINE Creators Market", category: LINE, company: LINE, topic: "Service/LINE Creators Market"}
+- {term: "LINE TODAY", category: LINE, company: LINE, topic: "Service/LINE TODAY"}
+- {term: "LINE SHOPPING", category: LINE, company: LINE, topic: "Service/LINE SHOPPING"}
+- {term: "LINE GIFTSHOP", category: LINE, company: LINE, topic: "Service/LINE GIFTSHOP"}
+- {term: "LINE FRIENDS", category: LINE, company: LINE, topic: "Service/LINE FRIENDS"}
+- {term: "LINE Financial", category: LINE, company: LINE, aliases: ["LINE Insurance", "LINE Smart Investment", "LINE Kakeibo", "LINE Credit", "LINE Score", "LINE Pocket Money"], topic: "Service/LINE Financial"}
+# Priority: LINE Bank by Hana Bank ("Hana Bank" alone is a different, larger bank, so it is not a term)
+- {term: "LINE Bank", category: LINE, company: LINE, aliases: ["LINE BK", "LINE Bank by Hana Bank", "LINE Bank Indonesia", "Bank LINE"], topic: "Service/LINE Bank"}
+- {term: "DOSI VAULT", category: LINE, company: LINE, aliases: ["DOSI Wallet"], topic: "Service/Crypto/Blockchain"}
+- {term: "LINE NEXT", category: LINE, company: LINE, topic: "Service/LINE NEXT"}
+- {term: "DOSI", category: LINE, company: LINE, case_sensitive: true, aliases: ["GAME DOSI", "ACRZ"], topic: "Service/DOSI"}
+# Priority: LINE Games (Let's Get Rich, LINE Rangers)
+- {term: "LINE Games", category: LINE, company: LINE, aliases: ["LINE GAME", "LINE studio", "LINE POD"], topic: "Service/Game"}
+- {term: "LINE Let's Get Rich", category: LINE, company: LINE, aliases: ["LINE Lets Get Rich", "LINE Let’s Get Rich"], topic: "Service/Game"}
+- {term: "Let's Get Rich", category: LINE, company: LINE, case_sensitive: true, aliases: ["Let’s Get Rich"], topic: "Service/Game"}
+- {term: "LINE Rangers", category: LINE, company: LINE, topic: "Service/Game"}
+# Priority: LINE Webtoon
+- {term: "LINE Webtoon", category: LINE, company: LINE, aliases: ["LINE WEBTOON Indonesia", "Webtoon", "WEBTOON Entertainment"], topic: "Service/LINE WEBTOON"}
+- {term: "LINE Manga", category: LINE, company: LINE, topic: "Service/LINE Manga"}
+- {term: "LINE TV", category: LINE, company: LINE, topic: "Service/LINE TV"}
+- {term: "LINE MAN", category: LINE, company: LINE, aliases: ["LINE MAN Wongnai"], topic: "Service/LINE MAN"}
+- {term: "LINE Mobile", category: LINE, company: LINE, topic: "Service/LINE Mobile"}
+- {term: "LINE Pay", category: LINE, company: LINE, aliases: ["Rabbit LINE Pay"], topic: "Service/LINE Pay"}
+- {term: "LINE Pay Plus", category: LINE, company: LINE, topic: "Service/LINE Pay Plus"}
+- {term: "LINE Travel", category: LINE, company: LINE, topic: "Service/LINE Travel"}
+- {term: "LINE POINTS", category: LINE, company: LINE, aliases: ["LINE Points"], topic: "Service/LINE POINTS"}
+- {term: "LINE MUSIC", category: LINE, company: LINE, aliases: ["LINE Music"], topic: "Service/LINE MUSIC"}
+- {term: "LINE GO", category: LINE, company: LINE, case_sensitive: true, topic: "Service/LINE GO"}
+- {term: "LINE SPOT", category: LINE, company: LINE, topic: "Service/LINE SPOT"}
+- {term: "LINE MELODY", category: LINE, company: LINE, aliases: ["LINE Melody"], topic: "Service/LINE MELODY"}
+- {term: "LINE SPLITBILL", category: LINE, company: LINE, aliases: ["LINE Split Bill"], topic: "Service/LINE SPLITBILL"}
+- {term: "LINE WORKS", category: LINE, company: LINE, aliases: ["LINE Works"], topic: "Service/LINE WORKS"}
+- {term: "LINE Ads", category: LINE, company: LINE, aliases: ["LINE Ads Platform", "LINE Advertising"], topic: "Service/LINE Ads"}
 
-- {term: "Messaging Apps", category: INDUSTRY, aliases: ["messaging app", "aplikasi pesan", "aplikasi chat", "aplikasi perpesanan"]}
-- {term: "Social Media", category: INDUSTRY, aliases: ["media sosial"]}
-- {term: "Creator Economy", category: INDUSTRY, aliases: ["ekonomi kreator", "content creator", "kreator konten"]}
-- {term: "Digital Trust", category: INDUSTRY, aliases: ["kepercayaan digital"]}
-- {term: "Online Safety", category: INDUSTRY, aliases: ["keamanan online", "keselamatan daring", "keamanan daring"]}
-- {term: "Privacy", category: INDUSTRY, aliases: ["privasi", "data privacy"]}
-- {term: "Cybersecurity", category: INDUSTRY, aliases: ["keamanan siber", "kejahatan siber", "serangan siber"]}
-- {term: "Artificial Intelligence", category: INDUSTRY, aliases: ["kecerdasan buatan", "AI generatif", "generative AI"]}
-- {term: "Fintech", category: INDUSTRY, aliases: ["financial technology", "teknologi finansial"]}
-- {term: "Digital Payments", category: INDUSTRY, aliases: ["pembayaran digital", "dompet digital", "e-wallet", "QRIS"]}
-- {term: "E-commerce", category: INDUSTRY, aliases: ["ecommerce", "perdagangan elektronik"]}
-- {term: "Digital Platforms", category: INDUSTRY, aliases: ["platform digital"]}
+# ---- COMPETITOR
+- {term: "Facebook", category: COMPETITOR, company: Facebook, aliases: ["Facebook Messenger", "Messenger Facebook"], scope: lead, topic: "Competitor/Facebook"}
+- {term: "WhatsApp", category: COMPETITOR, company: WhatsApp, aliases: ["WA Business"], topic: "Competitor/WhatsApp"}
+- {term: "WeChat", category: COMPETITOR, company: WeChat, topic: "Competitor/WeChat"}
+- {term: "Snapchat", category: COMPETITOR, company: Snapchat, topic: "Competitor/Snapchat"}
+- {term: "Telegram", category: COMPETITOR, company: Telegram, topic: "Competitor/Telegram"}
+- {term: "Instagram", category: COMPETITOR, company: Instagram, scope: lead, topic: "Competitor/Instagram"}
+- {term: "Twitter", category: COMPETITOR, company: X, aliases: ["platform X", "media sosial X", "X (Twitter)", "X Corp"], scope: lead, topic: "Competitor/X"}
+- {term: "Meta", category: COMPETITOR, company: Meta, case_sensitive: true, aliases: ["Meta Platforms", "Meta AI"], scope: lead, topic: "Competitor/Meta"}
+- {term: "Threads", category: COMPETITOR, company: Threads, case_sensitive: true, aliases: ["aplikasi Threads"], scope: lead, topic: "Competitor/Threads"}
+- {term: "Google", category: COMPETITOR, company: Google, case_sensitive: true, aliases: ["Google Indonesia"], scope: lead, topic: "Competitor/Google"}
+- {term: "KakaoTalk", category: COMPETITOR, company: KakaoTalk, aliases: ["Kakao Talk"], topic: "Competitor/Other"}
 
-- {term: "Komdigi", category: GOVERNMENT, aliases: ["Kementerian Komunikasi dan Digital", "Kemkomdigi", "Kominfo"]}
-- {term: "OJK", category: GOVERNMENT, aliases: ["Otoritas Jasa Keuangan"], case_sensitive: true}
-- {term: "Bank Indonesia", category: GOVERNMENT}
-- {term: "KPPU", category: GOVERNMENT, aliases: ["Komisi Pengawas Persaingan Usaha"]}
-- {term: "PDP Law", category: GOVERNMENT, aliases: ["UU PDP", "Pelindungan Data Pribadi", "Perlindungan Data Pribadi"]}
-- {term: "Digital Platform Regulation", category: GOVERNMENT, aliases: ["regulasi platform digital", "aturan platform digital", "regulasi platform"]}
-- {term: "Cybersecurity Regulation", category: GOVERNMENT, aliases: ["regulasi keamanan siber", "RUU Keamanan dan Ketahanan Siber", "RUU KKS"]}
-- {term: "Online Safety Policy", category: GOVERNMENT, aliases: ["kebijakan keamanan online", "perlindungan anak di ruang digital", "regulasi keamanan online"]}
+# ---- INDUSTRY
+- {term: "Social Media", category: INDUSTRY, aliases: ["media sosial"], topic: "Industry/Social Media"}
+- {term: "Creator Economy", category: INDUSTRY, aliases: ["ekonomi kreator", "content creator", "kreator konten"], topic: "Industry/General"}
+- {term: "Web3", category: INDUSTRY, aliases: ["Web 3"], topic: "Industry/Web3"}
+- {term: "Crypto", category: INDUSTRY, aliases: ["kripto", "aset kripto", "cryptocurrency", "mata uang kripto"], topic: "Industry/Crypto"}
+- {term: "Blockchain", category: INDUSTRY, topic: "Industry/Blockchain"}
+- {term: "NFT", category: INDUSTRY, case_sensitive: true, aliases: ["non-fungible token"], topic: "Industry/NFT"}
+- {term: "Messaging Apps", category: INDUSTRY, aliases: ["messaging app", "aplikasi pesan", "aplikasi chat", "aplikasi perpesanan"], topic: "Industry/Messenger"}
+- {term: "Artificial Intelligence", category: INDUSTRY, aliases: ["kecerdasan buatan", "AI generatif", "generative AI"], topic: "Industry/AI"}
+- {term: "Fintech", category: INDUSTRY, aliases: ["financial technology", "teknologi finansial"], topic: "Industry/Fintech"}
+- {term: "Digital Payments", category: INDUSTRY, aliases: ["pembayaran digital", "dompet digital", "e-wallet", "QRIS"], topic: "Industry/Fintech"}
+- {term: "Digital Banking", category: INDUSTRY, aliases: ["bank digital", "neobank"], topic: "Industry/Fintech"}
+- {term: "Digital Trust", category: INDUSTRY, aliases: ["kepercayaan digital"], topic: "Industry/General"}
+- {term: "Online Safety", category: INDUSTRY, aliases: ["keamanan online", "keselamatan daring", "keamanan daring"], topic: "Industry/General"}
+- {term: "Privacy", category: INDUSTRY, aliases: ["privasi", "data privacy"], topic: "Industry/General"}
+- {term: "Cybersecurity", category: INDUSTRY, aliases: ["keamanan siber", "kejahatan siber", "serangan siber"], topic: "Industry/General"}
+- {term: "E-commerce", category: INDUSTRY, aliases: ["ecommerce", "perdagangan elektronik"], topic: "Industry/General"}
+- {term: "Digital Platforms", category: INDUSTRY, aliases: ["platform digital"], topic: "Industry/General"}
+
+# ---- GOVERNMENT (shown under Industry/Regulation in the library; the report keeps its own Government section)
+- {term: "Komdigi", category: GOVERNMENT, aliases: ["Kementerian Komunikasi dan Digital", "Kemkomdigi", "Kominfo"], topic: "Industry/Regulation"}
+- {term: "OJK", category: GOVERNMENT, aliases: ["Otoritas Jasa Keuangan"], case_sensitive: true, topic: "Industry/Regulation"}
+- {term: "Bank Indonesia", category: GOVERNMENT, topic: "Industry/Regulation"}
+- {term: "KPPU", category: GOVERNMENT, aliases: ["Komisi Pengawas Persaingan Usaha"], topic: "Industry/Regulation"}
+- {term: "PDP Law", category: GOVERNMENT, aliases: ["UU PDP", "Pelindungan Data Pribadi", "Perlindungan Data Pribadi"], topic: "Industry/Regulation"}
+- {term: "Digital Platform Regulation", category: GOVERNMENT, aliases: ["regulasi platform digital", "aturan platform digital", "regulasi platform"], topic: "Industry/Regulation"}
+- {term: "Cybersecurity Regulation", category: GOVERNMENT, aliases: ["regulasi keamanan siber", "RUU Keamanan dan Ketahanan Siber", "RUU KKS"], topic: "Industry/Regulation"}
+- {term: "Online Safety Policy", category: GOVERNMENT, aliases: ["kebijakan keamanan online", "perlindungan anak di ruang digital", "regulasi keamanan online"], topic: "Industry/Regulation"}

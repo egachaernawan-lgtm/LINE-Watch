@@ -18,6 +18,7 @@ class ArticleOut(BaseModel):
     keyword_trigger: str
     category: ArticleCategory
     company: str | None
+    topic: str | None = None
     sentiment: Sentiment | None
     importance: Level | None
     business_impact: Level | None

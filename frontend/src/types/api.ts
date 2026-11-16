@@ -13,6 +13,7 @@ export interface Article {
   keyword_trigger: string;
   category: Category;
   company: string | null;
+  topic?: string | null;
   sentiment: Sentiment | null;
   importance: Level | null;
   business_impact: Level | null;
@@ -95,4 +96,35 @@ export interface LiveFetchResult {
   already_known: number; // matched but already in the snapshot (or twice in this fetch)
   total_new: number;
   articles: LiveArticle[]; // best-first, at most 30
+}
+
+export interface LibraryKeyword {
+  term: string;
+  aliases: string[];
+  case_sensitive: boolean;
+  scope: "anywhere" | "lead";
+  is_active: boolean;
+}
+
+export interface LibraryTopic {
+  key: string; // "<group>/<name>", also the feed's `topic` filter
+  name: string;
+  category: Category;
+  description: string | null;
+  report_cap: number | null;
+  judged: boolean;
+  keywords: LibraryKeyword[];
+  articles_30d: number;
+  articles_total: number;
+}
+
+export interface LibraryGroup {
+  name: string;
+  description: string | null;
+  topics: LibraryTopic[];
+}
+
+export interface Library {
+  groups: LibraryGroup[];
+  prominent_media: string[];
 }

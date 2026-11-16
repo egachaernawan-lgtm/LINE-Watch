@@ -14,6 +14,7 @@ export function ArticleCard({ article: a }: { article: Article }) {
         <SentimentTag sentiment={a.sentiment} />
         <CategoryTag category={a.category} />
         {a.company && a.company !== "LINE" && <Tag tone="outline">{a.company}</Tag>}
+        {a.topic && <Tag tone="info">{a.topic.replace("/", " · ")}</Tag>}
         {a.importance === "HIGH" && <Tag tone="warning">High importance</Tag>}
       </div>
 

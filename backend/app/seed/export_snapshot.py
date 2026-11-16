@@ -19,6 +19,7 @@ from app.core.config import get_settings
 from app.core.db import SessionLocal
 from app.models import AnalysisStatus, Article
 from app.seed.export_live_config import write as write_live_config
+from app.services.library import build_library
 from app.services.reports.daily_report import ENDING, build_daily_report
 
 BODY_EXCERPT_CHARS = 600  # the demo links to the original; it does not republish full articles
@@ -75,6 +76,7 @@ async def export(days: int, report_days: int, out: Path) -> None:
             "keyword_trigger": a.keyword_trigger,
             "category": _value(a.category),
             "company": a.company,
+            "topic": a.topic,
             "sentiment": _value(a.sentiment),
             "importance": _value(a.importance),
             "business_impact": _value(a.business_impact),
@@ -87,10 +89,14 @@ async def export(days: int, report_days: int, out: Path) -> None:
     ]
     print("Rendering daily reports (English translation uses a few Gemini requests the first time)...")
     reports = await build_reports(report_days)
+    async with SessionLocal() as session:
+        library = (await build_library(session)).model_dump(mode="json")
+    (out.parent / "library.json").write_text(json.dumps(library, ensure_ascii=False, indent=1), encoding="utf-8")
     snapshot = {"generated_at": datetime.now(timezone.utc).isoformat(), "articles": articles, "reports": reports}
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(snapshot, ensure_ascii=False, indent=1), encoding="utf-8")
 
+    print(f"Wrote the topic library to {out.parent / 'library.json'}")
     print(f"Wrote {len(articles)} analysed articles and {len(reports)} daily reports to {out}")
     if not articles:
         print("Nothing to export: run an ingestion and the analysis first (see README).")

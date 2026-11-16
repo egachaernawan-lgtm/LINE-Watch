@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_session
 from app.core.security import get_current_user
-from app.models import Article, ArticleCategory, Level, Sentiment
+from app.models import Article, ArticleCategory, Level, Sentiment, Topic
 from app.schemas.article import ArticleDetail, ArticlePage
 
 router = APIRouter(prefix="/articles", tags=["articles"], dependencies=[Depends(get_current_user)])
@@ -21,6 +21,7 @@ async def list_articles(
     importance: Level | None = None,
     media: str | None = None,
     company: str | None = None,
+    topic: str | None = Query(default=None, max_length=100, description='"<group>/<name>", e.g. Service/LINE Bank'),
     q: str | None = Query(default=None, max_length=200),
     date_from: datetime | None = None,
     date_to: datetime | None = None,
@@ -39,6 +40,9 @@ async def list_articles(
         conditions.append(Article.media_name == media)
     if company:
         conditions.append(Article.company == company)
+    if topic:
+        group_name, _, name = topic.partition("/")
+        conditions.append(Article.topic_id.in_(select(Topic.id).where(Topic.group_name == group_name, Topic.name == name)))
     if date_from:
         conditions.append(EFFECTIVE_TIME >= date_from)
     if date_to:

@@ -1,0 +1,1523 @@
+{
+ "groups": [
+  {
+   "name": "Business",
+   "description": "News on LINE's business operation & relationships",
+   "topics": [
+    {
+     "key": "Business/Earnings",
+     "name": "Earnings",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": true,
+     "keywords": [],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Business/Corporate",
+     "name": "Corporate",
+     "category": "LINE",
+     "description": "Incl. M&A, investment, partnership, LINE ownership issue and IPO",
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LY Corporation",
+       "aliases": [
+        "LY Corp",
+        "LINE Yahoo",
+        "LINE Yahoo Corp",
+        "LINE Corporation"
+       ],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Business/HR",
+     "name": "HR",
+     "category": "LINE",
+     "description": "Incl. hiring, internship and LINE hybrid work",
+     "report_cap": null,
+     "judged": true,
+     "keywords": [],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Business/NAVER",
+     "name": "NAVER",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "NAVER",
+       "aliases": [
+        "Naver Corp",
+        "Naver Corporation"
+       ],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Business/IPX",
+     "name": "IPX",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "IPX",
+       "aliases": [
+        "IPX Corporation"
+       ],
+       "case_sensitive": true,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Business/General",
+     "name": "General",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE",
+       "aliases": [],
+       "case_sensitive": true,
+       "scope": "anywhere",
+       "is_active": true
+      },
+      {
+       "term": "LINE Indonesia",
+       "aliases": [],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    }
+   ]
+  },
+  {
+   "name": "Tech",
+   "description": "Articles on technologies",
+   "topics": [
+    {
+     "key": "Tech/Blockchain",
+     "name": "Blockchain",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": true,
+     "keywords": [],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Tech/AI",
+     "name": "AI",
+     "category": "LINE",
+     "description": "HyperCLOVA X",
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "HyperCLOVA X",
+       "aliases": [
+        "HyperCLOVA"
+       ],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Tech/General",
+     "name": "General",
+     "category": "LINE",
+     "description": "Incl. LINE's tech events",
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE Developer Day",
+       "aliases": [
+        "LINE DEVDAY"
+       ],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    }
+   ]
+  },
+  {
+   "name": "Service",
+   "description": "News on LINE's services (other LINE services may be added to the list)",
+   "topics": [
+    {
+     "key": "Service/Messenger",
+     "name": "Messenger",
+     "category": "LINE",
+     "description": "Incl. LINE Openchat, LINE Theme and LINE Alert",
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE Messenger",
+       "aliases": [
+        "aplikasi LINE",
+        "LINE Openchat",
+        "LINE Theme",
+        "LINE Alert"
+       ],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE OA",
+     "name": "LINE OA",
+     "category": "LINE",
+     "description": "Official Account",
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE Official Account",
+       "aliases": [
+        "LINE OA"
+       ],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE STICKERS",
+     "name": "LINE STICKERS",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE Stickers",
+       "aliases": [
+        "LINE Sticker",
+        "stiker LINE"
+       ],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE VOOM",
+     "name": "LINE VOOM",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE VOOM",
+       "aliases": [],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE Creators Market",
+     "name": "LINE Creators Market",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE Creators Market",
+       "aliases": [],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE TODAY",
+     "name": "LINE TODAY",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE TODAY",
+       "aliases": [],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE SHOPPING",
+     "name": "LINE SHOPPING",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE SHOPPING",
+       "aliases": [],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE GIFTSHOP",
+     "name": "LINE GIFTSHOP",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE GIFTSHOP",
+       "aliases": [],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE FRIENDS",
+     "name": "LINE FRIENDS",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE FRIENDS",
+       "aliases": [],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE Financial",
+     "name": "LINE Financial",
+     "category": "LINE",
+     "description": "Incl. LINE Insurance, Smart Investment, Kakeibo, Credit, Score and Pocket Money",
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE Financial",
+       "aliases": [
+        "LINE Insurance",
+        "LINE Smart Investment",
+        "LINE Kakeibo",
+        "LINE Credit",
+        "LINE Score",
+        "LINE Pocket Money"
+       ],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE Bank",
+     "name": "LINE Bank",
+     "category": "LINE",
+     "description": "Incl. LINE BK and LINE Bank by Hana Bank. Priority in Indonesia",
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE Bank",
+       "aliases": [
+        "LINE BK",
+        "LINE Bank by Hana Bank",
+        "LINE Bank Indonesia",
+        "Bank LINE"
+       ],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/Crypto/Blockchain",
+     "name": "Crypto/Blockchain",
+     "category": "LINE",
+     "description": "Incl. DOSI VAULT, DOSI Wallet and LINE Blockchain",
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "DOSI VAULT",
+       "aliases": [
+        "DOSI Wallet"
+       ],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      },
+      {
+       "term": "LINE Blockchain",
+       "aliases": [],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE NEXT",
+     "name": "LINE NEXT",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE NEXT",
+       "aliases": [],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/DOSI",
+     "name": "DOSI",
+     "category": "LINE",
+     "description": "Incl. GAME DOSI, AVA and ACRZ",
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "DOSI",
+       "aliases": [
+        "GAME DOSI",
+        "ACRZ"
+       ],
+       "case_sensitive": true,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/Game",
+     "name": "Game",
+     "category": "LINE",
+     "description": "Incl. LINE GAME(s), LINE studio and LINE POD. Priority: Let's Get Rich, LINE Rangers",
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "Let's Get Rich",
+       "aliases": [
+        "Let’s Get Rich"
+       ],
+       "case_sensitive": true,
+       "scope": "anywhere",
+       "is_active": true
+      },
+      {
+       "term": "LINE Games",
+       "aliases": [
+        "LINE GAME",
+        "LINE studio",
+        "LINE POD"
+       ],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      },
+      {
+       "term": "LINE Let's Get Rich",
+       "aliases": [
+        "LINE Lets Get Rich",
+        "LINE Let’s Get Rich"
+       ],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      },
+      {
+       "term": "LINE Rangers",
+       "aliases": [],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE WEBTOON",
+     "name": "LINE WEBTOON",
+     "category": "LINE",
+     "description": "Priority in Indonesia",
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE Webtoon",
+       "aliases": [
+        "LINE WEBTOON Indonesia",
+        "Webtoon",
+        "WEBTOON Entertainment"
+       ],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE Manga",
+     "name": "LINE Manga",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE Manga",
+       "aliases": [],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE TV",
+     "name": "LINE TV",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE TV",
+       "aliases": [],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE MAN",
+     "name": "LINE MAN",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE MAN",
+       "aliases": [
+        "LINE MAN Wongnai"
+       ],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE Mobile",
+     "name": "LINE Mobile",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE Mobile",
+       "aliases": [],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE Pay",
+     "name": "LINE Pay",
+     "category": "LINE",
+     "description": "Incl. Rabbit LINE Pay",
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE Pay",
+       "aliases": [
+        "Rabbit LINE Pay"
+       ],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE Pay Plus",
+     "name": "LINE Pay Plus",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE Pay Plus",
+       "aliases": [],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE Travel",
+     "name": "LINE Travel",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE Travel",
+       "aliases": [],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE POINTS",
+     "name": "LINE POINTS",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE POINTS",
+       "aliases": [
+        "LINE Points"
+       ],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE MUSIC",
+     "name": "LINE MUSIC",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE MUSIC",
+       "aliases": [
+        "LINE Music"
+       ],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE GO",
+     "name": "LINE GO",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE GO",
+       "aliases": [],
+       "case_sensitive": true,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE SPOT",
+     "name": "LINE SPOT",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE SPOT",
+       "aliases": [],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE MELODY",
+     "name": "LINE MELODY",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE MELODY",
+       "aliases": [
+        "LINE Melody"
+       ],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE SPLITBILL",
+     "name": "LINE SPLITBILL",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE SPLITBILL",
+       "aliases": [
+        "LINE Split Bill"
+       ],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE WORKS",
+     "name": "LINE WORKS",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE WORKS",
+       "aliases": [
+        "LINE Works"
+       ],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/LINE Ads",
+     "name": "LINE Ads",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "LINE Ads",
+       "aliases": [
+        "LINE Ads Platform",
+        "LINE Advertising"
+       ],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Service/General",
+     "name": "General",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": true,
+     "keywords": [],
+     "articles_30d": 0,
+     "articles_total": 0
+    }
+   ]
+  },
+  {
+   "name": "Leadership",
+   "description": "News on corporate leadership",
+   "topics": [
+    {
+     "key": "Leadership/Leadership",
+     "name": "Leadership",
+     "category": "LINE",
+     "description": null,
+     "report_cap": null,
+     "judged": false,
+     "keywords": [],
+     "articles_30d": 0,
+     "articles_total": 0
+    }
+   ]
+  },
+  {
+   "name": "Competitor",
+   "description": "Competing messaging and social platforms",
+   "topics": [
+    {
+     "key": "Competitor/Facebook",
+     "name": "Facebook",
+     "category": "COMPETITOR",
+     "description": null,
+     "report_cap": 5,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "Facebook",
+       "aliases": [
+        "Facebook Messenger",
+        "Messenger Facebook"
+       ],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Competitor/WhatsApp",
+     "name": "WhatsApp",
+     "category": "COMPETITOR",
+     "description": null,
+     "report_cap": 5,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "WhatsApp",
+       "aliases": [
+        "WA Business"
+       ],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 206,
+     "articles_total": 206
+    },
+    {
+     "key": "Competitor/WeChat",
+     "name": "WeChat",
+     "category": "COMPETITOR",
+     "description": null,
+     "report_cap": 5,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "WeChat",
+       "aliases": [],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 2,
+     "articles_total": 2
+    },
+    {
+     "key": "Competitor/Snapchat",
+     "name": "Snapchat",
+     "category": "COMPETITOR",
+     "description": null,
+     "report_cap": 5,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "Snapchat",
+       "aliases": [],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Competitor/Telegram",
+     "name": "Telegram",
+     "category": "COMPETITOR",
+     "description": null,
+     "report_cap": 5,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "Telegram",
+       "aliases": [],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 35,
+     "articles_total": 35
+    },
+    {
+     "key": "Competitor/Instagram",
+     "name": "Instagram",
+     "category": "COMPETITOR",
+     "description": null,
+     "report_cap": 5,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "Instagram",
+       "aliases": [],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Competitor/X",
+     "name": "X",
+     "category": "COMPETITOR",
+     "description": null,
+     "report_cap": 5,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "Twitter",
+       "aliases": [
+        "platform X",
+        "media sosial X",
+        "X (Twitter)",
+        "X Corp"
+       ],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Competitor/Meta",
+     "name": "Meta",
+     "category": "COMPETITOR",
+     "description": null,
+     "report_cap": 5,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "Meta",
+       "aliases": [
+        "Meta Platforms",
+        "Meta AI"
+       ],
+       "case_sensitive": true,
+       "scope": "lead",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Competitor/Threads",
+     "name": "Threads",
+     "category": "COMPETITOR",
+     "description": null,
+     "report_cap": 5,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "Threads",
+       "aliases": [
+        "aplikasi Threads"
+       ],
+       "case_sensitive": true,
+       "scope": "lead",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Competitor/Google",
+     "name": "Google",
+     "category": "COMPETITOR",
+     "description": null,
+     "report_cap": 5,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "Google",
+       "aliases": [
+        "Google Indonesia"
+       ],
+       "case_sensitive": true,
+       "scope": "lead",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Competitor/Other",
+     "name": "Other",
+     "category": "COMPETITOR",
+     "description": "Competitors not in the list (for example KakaoTalk)",
+     "report_cap": 5,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "KakaoTalk",
+       "aliases": [
+        "Kakao Talk"
+       ],
+       "case_sensitive": false,
+       "scope": "anywhere",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    }
+   ]
+  },
+  {
+   "name": "Industry",
+   "description": "Industry and regulation context",
+   "topics": [
+    {
+     "key": "Industry/Social Media",
+     "name": "Social Media",
+     "category": "INDUSTRY",
+     "description": null,
+     "report_cap": 5,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "Social Media",
+       "aliases": [
+        "media sosial"
+       ],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 146,
+     "articles_total": 146
+    },
+    {
+     "key": "Industry/Web3",
+     "name": "Web3",
+     "category": "INDUSTRY",
+     "description": null,
+     "report_cap": 5,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "Web3",
+       "aliases": [
+        "Web 3"
+       ],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Industry/Crypto",
+     "name": "Crypto",
+     "category": "INDUSTRY",
+     "description": null,
+     "report_cap": 5,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "Crypto",
+       "aliases": [
+        "kripto",
+        "aset kripto",
+        "cryptocurrency",
+        "mata uang kripto"
+       ],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Industry/Blockchain",
+     "name": "Blockchain",
+     "category": "INDUSTRY",
+     "description": null,
+     "report_cap": 5,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "Blockchain",
+       "aliases": [],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Industry/NFT",
+     "name": "NFT",
+     "category": "INDUSTRY",
+     "description": null,
+     "report_cap": 5,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "NFT",
+       "aliases": [
+        "non-fungible token"
+       ],
+       "case_sensitive": true,
+       "scope": "lead",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Industry/Regulation",
+     "name": "Regulation",
+     "category": "INDUSTRY",
+     "description": "Government and regulator news (Komdigi, OJK, Bank Indonesia, KPPU, PDP law)",
+     "report_cap": 5,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "Bank Indonesia",
+       "aliases": [],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      },
+      {
+       "term": "Cybersecurity Regulation",
+       "aliases": [
+        "regulasi keamanan siber",
+        "RUU Keamanan dan Ketahanan Siber",
+        "RUU KKS"
+       ],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      },
+      {
+       "term": "Digital Platform Regulation",
+       "aliases": [
+        "regulasi platform digital",
+        "aturan platform digital",
+        "regulasi platform"
+       ],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      },
+      {
+       "term": "Komdigi",
+       "aliases": [
+        "Kementerian Komunikasi dan Digital",
+        "Kemkomdigi",
+        "Kominfo"
+       ],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      },
+      {
+       "term": "KPPU",
+       "aliases": [
+        "Komisi Pengawas Persaingan Usaha"
+       ],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      },
+      {
+       "term": "OJK",
+       "aliases": [
+        "Otoritas Jasa Keuangan"
+       ],
+       "case_sensitive": true,
+       "scope": "lead",
+       "is_active": true
+      },
+      {
+       "term": "Online Safety Policy",
+       "aliases": [
+        "kebijakan keamanan online",
+        "perlindungan anak di ruang digital",
+        "regulasi keamanan online"
+       ],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      },
+      {
+       "term": "PDP Law",
+       "aliases": [
+        "UU PDP",
+        "Pelindungan Data Pribadi",
+        "Perlindungan Data Pribadi"
+       ],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 241,
+     "articles_total": 241
+    },
+    {
+     "key": "Industry/Messenger",
+     "name": "Messenger",
+     "category": "INDUSTRY",
+     "description": null,
+     "report_cap": 5,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "Messaging Apps",
+       "aliases": [
+        "messaging app",
+        "aplikasi pesan",
+        "aplikasi chat",
+        "aplikasi perpesanan"
+       ],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 0,
+     "articles_total": 0
+    },
+    {
+     "key": "Industry/AI",
+     "name": "AI",
+     "category": "INDUSTRY",
+     "description": null,
+     "report_cap": 5,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "Artificial Intelligence",
+       "aliases": [
+        "kecerdasan buatan",
+        "AI generatif",
+        "generative AI"
+       ],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 84,
+     "articles_total": 84
+    },
+    {
+     "key": "Industry/Fintech",
+     "name": "Fintech",
+     "category": "INDUSTRY",
+     "description": "Digital payment, banking",
+     "report_cap": 5,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "Digital Banking",
+       "aliases": [
+        "bank digital",
+        "neobank"
+       ],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      },
+      {
+       "term": "Digital Payments",
+       "aliases": [
+        "pembayaran digital",
+        "dompet digital",
+        "e-wallet",
+        "QRIS"
+       ],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      },
+      {
+       "term": "Fintech",
+       "aliases": [
+        "financial technology",
+        "teknologi finansial"
+       ],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 4,
+     "articles_total": 4
+    },
+    {
+     "key": "Industry/General",
+     "name": "General",
+     "category": "INDUSTRY",
+     "description": "Other IT-related service or corporate news",
+     "report_cap": 5,
+     "judged": false,
+     "keywords": [
+      {
+       "term": "Creator Economy",
+       "aliases": [
+        "ekonomi kreator",
+        "content creator",
+        "kreator konten"
+       ],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      },
+      {
+       "term": "Cybersecurity",
+       "aliases": [
+        "keamanan siber",
+        "kejahatan siber",
+        "serangan siber"
+       ],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      },
+      {
+       "term": "Digital Platforms",
+       "aliases": [
+        "platform digital"
+       ],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      },
+      {
+       "term": "Digital Trust",
+       "aliases": [
+        "kepercayaan digital"
+       ],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      },
+      {
+       "term": "E-commerce",
+       "aliases": [
+        "ecommerce",
+        "perdagangan elektronik"
+       ],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      },
+      {
+       "term": "Online Safety",
+       "aliases": [
+        "keamanan online",
+        "keselamatan daring",
+        "keamanan daring"
+       ],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      },
+      {
+       "term": "Privacy",
+       "aliases": [
+        "privasi",
+        "data privacy"
+       ],
+       "case_sensitive": false,
+       "scope": "lead",
+       "is_active": true
+      }
+     ],
+     "articles_30d": 82,
+     "articles_total": 82
+    }
+   ]
+  }
+ ],
+ "prominent_media": [
+  "kompas",
+  "detik",
+  "cnbc indonesia",
+  "cnn indonesia",
+  "antara",
+  "tempo",
+  "kontan",
+  "bisnis",
+  "katadata",
+  "liputan6",
+  "tribunnews",
+  "kumparan",
+  "republika",
+  "okezone",
+  "sindonews",
+  "dailysocial",
+  "selular"
+ ]
+}

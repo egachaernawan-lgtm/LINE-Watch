@@ -1,9 +1,13 @@
 """Queries that feed the daily and monthly reports."""
 
-from collections import Counter
+from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from datetime import datetime
+from functools import lru_cache
+from pathlib import Path
 from zoneinfo import ZoneInfo
+
+import yaml
 
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -16,6 +20,7 @@ from app.models import (
     Level,
     RecommendedAction,
     Sentiment,
+    Topic,
 )
 
 EFFECTIVE_TIME = func.coalesce(Article.published_at, Article.collected_at)
@@ -27,6 +32,33 @@ def sort_articles(articles: list[Article]) -> list[Article]:
         articles,
         key=lambda a: (_LEVEL_ORDER[a.importance], -(a.published_at or a.collected_at).timestamp()),
     )
+
+
+@lru_cache
+def prominent_media() -> tuple[str, ...]:
+    data = yaml.safe_load((Path(__file__).parents[2] / "seed" / "topics.yaml").read_text(encoding="utf-8"))
+    return tuple(m.lower() for m in data.get("prominent_media", []))
+
+
+def is_prominent(media_name: str) -> bool:
+    name = media_name.lower()
+    return any(p in name for p in prominent_media())
+
+
+def cap_per_topic(articles: list[Article], topics: dict[int, Topic]) -> list[Article]:
+    """Keep at most `report_cap` articles per topic, preferring prominent media, then the existing order
+    (importance, newest first). Topics without a cap, and articles without a topic, are never trimmed."""
+    groups: dict[int, list[Article]] = defaultdict(list)
+    for a in articles:
+        groups[a.topic_id or 0].append(a)
+    drop: set[int] = set()
+    for topic_id, items in groups.items():
+        cap = topics[topic_id].report_cap if topic_id in topics else None
+        if cap is None or len(items) <= cap:
+            continue
+        ranked = sorted(items, key=lambda a: not is_prominent(a.media_name))  # stable: keeps importance/recency order
+        drop.update(a.id for a in ranked[cap:])
+    return [a for a in articles if a.id not in drop]
 
 
 async def articles_between(session: AsyncSession, start: datetime, end: datetime) -> list[Article]:
@@ -57,9 +89,11 @@ class DailyData:
 
 async def daily_data(session: AsyncSession, start: datetime, end: datetime) -> DailyData:
     arts = await articles_between(session, start, end)
+    topics = {t.id: t for t in (await session.scalars(select(Topic))).all()}
     by_cat = lambda c: [a for a in arts if a.category == c]  # noqa: E731
     line = by_cat(ArticleCategory.LINE)
-    competitors = by_cat(ArticleCategory.COMPETITOR)
+    all_competitors = by_cat(ArticleCategory.COMPETITOR)
+    competitors = cap_per_topic(all_competitors, topics)
     actions = {
         "Prepare response": [a for a in arts if a.recommended_action == RecommendedAction.PREPARE_RESPONSE],
         "Share internally": [a for a in arts if a.recommended_action == RecommendedAction.SHARE_INTERNALLY],
@@ -73,10 +107,10 @@ async def daily_data(session: AsyncSession, start: datetime, end: datetime) -> D
         total=len(arts),
         line=line,
         competitors=competitors,
-        industry=by_cat(ArticleCategory.INDUSTRY),
-        government=by_cat(ArticleCategory.GOVERNMENT),
+        industry=cap_per_topic(by_cat(ArticleCategory.INDUSTRY), topics),
+        government=cap_per_topic(by_cat(ArticleCategory.GOVERNMENT), topics),
         negative=[a for a in line if a.sentiment == Sentiment.NEGATIVE],
-        opportunities=[a for a in competitors if a.sentiment == Sentiment.NEGATIVE]
+        opportunities=[a for a in all_competitors if a.sentiment == Sentiment.NEGATIVE]
         + [a for a in line if a.sentiment == Sentiment.POSITIVE and a.importance == Level.HIGH],
         actions={k: v for k, v in actions.items() if v},
     )

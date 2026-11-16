@@ -31,6 +31,7 @@ class Article(Base):
         Index("ix_articles_category", "category", text("published_at DESC")),
         Index("ix_articles_sentiment", "sentiment", text("published_at DESC")),
         Index("ix_articles_media", "media_name"),
+        Index("ix_articles_topic", "topic_id"),
         Index("ix_articles_title_fp", "title_fingerprint"),
         Index("ix_articles_search", "search_vector", postgresql_using="gin"),
         Index("ix_articles_pending", "analysis_status", postgresql_where=text("analysis_status <> 'DONE'")),
@@ -52,6 +53,8 @@ class Article(Base):
     keyword_trigger: Mapped[str] = mapped_column(Text)
     category: Mapped[ArticleCategory] = mapped_column(_enum(ArticleCategory, "article_category"))
     company: Mapped[str | None] = mapped_column(Text)
+    # Library subtopic: from the matched keyword, or picked by Gemini for the judged topics
+    topic_id: Mapped[int | None] = mapped_column(ForeignKey("topics.id"))
     is_relevant: Mapped[bool] = mapped_column(server_default=text("true"))
     # Other outlets that ran the same story (shown as "Media (+N)" in the email report)
     duplicate_count: Mapped[int] = mapped_column(Integer, server_default=text("0"))
@@ -76,6 +79,12 @@ class Article(Base):
     )
 
     keyword_hits: Mapped[list["ArticleKeywordHit"]] = relationship(cascade="all, delete-orphan")
+    topic_obj = relationship("Topic", lazy="joined")
+
+    @property
+    def topic(self) -> str | None:
+        """Library subtopic as "<group>/<name>" (what the API and the feed filter use)."""
+        return self.topic_obj.key if self.topic_obj else None
 
 
 class ArticleKeywordHit(Base):

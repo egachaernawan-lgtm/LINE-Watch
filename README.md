@@ -48,6 +48,15 @@ curl -X POST http://localhost:8000/internal/ingest -H "X-Internal-Key: <INTERNAL
 
 Anything left blank is skipped with a message in the run result (ingestion still works without Gemini, Sheets, Drive or email).
 
+## Topic library
+
+What LINE Watch looks for is defined in two files under `backend/app/seed/`:
+
+- `topics.yaml`: the library from the team's keyword sheets (Business, Tech, Service, Leadership for LINE; Competitor and Industry for external), per-topic report cap (max 5 a day for external topics) and the prominent-media list used under that cap.
+- `keywords.yaml`: the search terms. Each one points at a topic with `topic: "<group>/<name>"`; `scope: lead` limits broad names (Google, Meta) to the headline and first paragraph.
+
+After editing either file: `cd backend && .venv/bin/python -m app.seed.loader` (idempotent). Topics with no search term (Earnings, HR, ...) are picked by Gemini while it analyses an article. The **Topic library** page shows the topics with their keywords and article counts, and the feed filters by topic (`/feed?topic=Service/LINE Bank`). Only Indonesian media are collected (links on another country's domain are dropped, see `services/ingestion/region.py`). Run `alembic upgrade head` once after pulling this change. Re-run `export_snapshot` to refresh the demo's library page and topic filter.
+
 ## Cloud Scheduler jobs (timezone Asia/Jakarta)
 
 | Schedule | Target (POST, OIDC auth) |

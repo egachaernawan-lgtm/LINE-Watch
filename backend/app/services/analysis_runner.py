@@ -8,12 +8,23 @@ from sqlalchemy import case, select
 from app.core.config import get_settings
 from app.core.db import SessionLocal
 from app.core.logging import get_logger
-from app.models import AnalysisStatus, Article, ArticleCategory
+from app.models import AnalysisStatus, Article, ArticleCategory, Topic
 from app.services import sheets
 from app.services.ai.gemini import QuotaExceeded, analyze_batch
 
 log = get_logger()
 MAX_ATTEMPTS = 3
+
+
+def _refine_topic(article: Article, chosen: str | None, topics: dict, topics_by_id: dict) -> None:
+    """Let Gemini's pick replace the keyword's topic only where the keyword could not know better:
+    a generic "General" topic, no topic, or one of the judged topics (Earnings, HR...)."""
+    new = topics.get(chosen or "")
+    if new is None or article.category != ArticleCategory.LINE or new.category != ArticleCategory.LINE:
+        return
+    current = topics_by_id.get(article.topic_id)
+    if current is None or current.name == "General" or new.judged:
+        article.topic_id = new.id
 
 
 async def analyze_pending(limit: int | None = None) -> dict:
@@ -36,6 +47,8 @@ async def analyze_pending(limit: int | None = None) -> dict:
                 .limit(limit or settings.gemini_max_per_run)
             )
         ).all()
+        topics = {t.key: t for t in (await session.scalars(select(Topic))).all()}
+        topics_by_id = {t.id: t for t in topics.values()}
         size = max(1, settings.gemini_batch_size)
         batches = [articles[i : i + size] for i in range(0, len(articles), size)]
         sem = asyncio.Semaphore(settings.gemini_concurrency)
@@ -75,6 +88,7 @@ async def analyze_pending(limit: int | None = None) -> dict:
                         failed += 1
                         continue
                     a.is_relevant = r.is_relevant
+                    _refine_topic(a, r.topic, topics, topics_by_id)
                     a.summary, a.sentiment = r.summary, r.sentiment
                     a.importance, a.business_impact = r.importance, r.business_impact
                     a.recommended_action = r.recommended_action
