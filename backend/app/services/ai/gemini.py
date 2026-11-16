@@ -35,6 +35,7 @@ class Analysis(BaseModel):
 
 class ItemAnalysis(Analysis):
     id: int  # echoes the id of the article in the request
+    topic: str | None = None  # LINE coverage only: "<group>/<name>" from the topic library
 
 
 class BatchAnalysis(BaseModel):

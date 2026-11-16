@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Boolean, DateTime, Enum, String, Text, text
+from sqlalchemy import Boolean, DateTime, Enum, ForeignKey, String, Text, text
 from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -36,3 +36,6 @@ class Keyword(Base):
     # Short ambiguous terms (e.g. "LINE") must match exactly as written.
     case_sensitive: Mapped[bool] = mapped_column(Boolean, server_default=text("false"))
     is_active: Mapped[bool] = mapped_column(Boolean, server_default=text("true"))
+    # Where the term counts: "anywhere" in the article, or only in the headline/lead ("lead"). NULL = by category.
+    scope: Mapped[str | None] = mapped_column(String(16))
+    topic_id: Mapped[int | None] = mapped_column(ForeignKey("topics.id"))

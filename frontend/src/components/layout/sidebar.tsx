@@ -2,6 +2,7 @@
 
 import clsx from "clsx";
 import {
+  BookOpen,
   Building2,
   FileText,
   Globe2,
@@ -30,6 +31,7 @@ const NAV: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/coverage/industry", label: "Industry", icon: Globe2 },
   { href: "/coverage/government", label: "Government", icon: Landmark },
   { href: "/media", label: "Top media", icon: Building2 },
+  { href: "/library", label: "Topic library", icon: BookOpen },
   { href: "/reports", label: "Reports", icon: FileText },
 ];
 

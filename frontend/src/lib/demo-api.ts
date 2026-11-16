@@ -1,3 +1,4 @@
+import library from "@/data/library.json";
 import rawSnapshot from "@/data/snapshot.json";
 import type { ArticleDetail, ArticlePage, CountItem, DailyPreview, Overview } from "@/types/api";
 
@@ -36,6 +37,7 @@ function listArticles(p: Params): ArticlePage {
     if (p.get("importance") && a.importance !== p.get("importance")) return false;
     if (p.get("media") && a.media_name !== p.get("media")) return false;
     if (p.get("company") && a.company !== p.get("company")) return false;
+    if (p.get("topic") && a.topic !== p.get("topic")) return false;
     if (from !== null && effectiveTime(a) < from) return false;
     if (to !== null && effectiveTime(a) >= to) return false;
     if (q) {
@@ -92,6 +94,7 @@ export function demoResponse(path: string[], params: Params): unknown | null {
   if (resource === "stats" && sub === "overview") return overview(Math.min(365, Math.max(1, Number(params.get("days")) || 7)));
   if (resource === "reports" && sub === "days") return snapshot.reports.map((r) => r.date);
   if (resource === "reports" && sub === "daily" && path[2] === "preview") return getDemoReport(params.get("on") ?? "");
+  if (resource === "library") return library;
   if (resource === "meta") return { generated_at: snapshot.generated_at, articles: articles.length };
   return null;
 }

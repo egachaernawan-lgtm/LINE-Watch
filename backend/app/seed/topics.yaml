@@ -1,0 +1,112 @@
+# Topic library: what LINE WATCH monitors, from keywords.md (LINE) and keywords-external.md (external).
+# Every keyword in keywords.yaml points at one topic here via `topic: "<group>/<name>"`.
+#
+# category   which report section the topic belongs to (LINE | COMPETITOR | INDUSTRY).
+# cap        max articles shown per topic in the daily report (external topics only; LINE is never capped).
+# judged     true = no search term can find it (Earnings, HR, General...); Gemini picks the topic from this
+#            list when it analyses an article that matched a keyword.
+# Scope: Indonesian media only. Passing mentions of LINE services still count (see ANALYSIS_SYSTEM).
+
+groups:
+  Business: "News on LINE's business operation & relationships"
+  Tech: "Articles on technologies"
+  Service: "News on LINE's services (other LINE services may be added to the list)"
+  Leadership: "News on corporate leadership"
+  Competitor: "Competing messaging and social platforms"
+  Industry: "Industry and regulation context"
+
+topics:
+  # Business
+  - {group: Business, name: Earnings, category: LINE, judged: true}
+  - {group: Business, name: Corporate, category: LINE, description: "Incl. M&A, investment, partnership, LINE ownership issue and IPO"}
+  - {group: Business, name: HR, category: LINE, judged: true, description: "Incl. hiring, internship and LINE hybrid work"}
+  - {group: Business, name: NAVER, category: LINE}
+  - {group: Business, name: IPX, category: LINE}
+  - {group: Business, name: General, category: LINE}
+  # Tech
+  - {group: Tech, name: Blockchain, category: LINE, judged: true}
+  - {group: Tech, name: AI, category: LINE, description: "HyperCLOVA X"}
+  - {group: Tech, name: General, category: LINE, description: "Incl. LINE's tech events"}
+  # Service
+  - {group: Service, name: Messenger, category: LINE, description: "Incl. LINE Openchat, LINE Theme and LINE Alert"}
+  - {group: Service, name: LINE OA, category: LINE, description: "Official Account"}
+  - {group: Service, name: LINE STICKERS, category: LINE}
+  - {group: Service, name: LINE VOOM, category: LINE}
+  - {group: Service, name: LINE Creators Market, category: LINE}
+  - {group: Service, name: LINE TODAY, category: LINE}
+  - {group: Service, name: LINE SHOPPING, category: LINE}
+  - {group: Service, name: LINE GIFTSHOP, category: LINE}
+  - {group: Service, name: LINE FRIENDS, category: LINE}
+  - {group: Service, name: LINE Financial, category: LINE, description: "Incl. LINE Insurance, Smart Investment, Kakeibo, Credit, Score and Pocket Money"}
+  - {group: Service, name: LINE Bank, category: LINE, description: "Incl. LINE BK and LINE Bank by Hana Bank. Priority in Indonesia"}
+  - {group: Service, name: Crypto/Blockchain, category: LINE, description: "Incl. DOSI VAULT, DOSI Wallet and LINE Blockchain"}
+  - {group: Service, name: LINE NEXT, category: LINE}
+  - {group: Service, name: DOSI, category: LINE, description: "Incl. GAME DOSI, AVA and ACRZ"}
+  - {group: Service, name: Game, category: LINE, description: "Incl. LINE GAME(s), LINE studio and LINE POD. Priority: Let's Get Rich, LINE Rangers"}
+  - {group: Service, name: LINE WEBTOON, category: LINE, description: "Priority in Indonesia"}
+  - {group: Service, name: LINE Manga, category: LINE}
+  - {group: Service, name: LINE TV, category: LINE}
+  - {group: Service, name: LINE MAN, category: LINE}
+  - {group: Service, name: LINE Mobile, category: LINE}
+  - {group: Service, name: LINE Pay, category: LINE, description: "Incl. Rabbit LINE Pay"}
+  - {group: Service, name: LINE Pay Plus, category: LINE}
+  - {group: Service, name: LINE Travel, category: LINE}
+  - {group: Service, name: LINE POINTS, category: LINE}
+  - {group: Service, name: LINE MUSIC, category: LINE}
+  - {group: Service, name: LINE GO, category: LINE}
+  - {group: Service, name: LINE SPOT, category: LINE}
+  - {group: Service, name: LINE MELODY, category: LINE}
+  - {group: Service, name: LINE SPLITBILL, category: LINE}
+  - {group: Service, name: LINE WORKS, category: LINE}
+  - {group: Service, name: LINE Ads, category: LINE}
+  - {group: Service, name: General, category: LINE, judged: true}
+  # Leadership (no search terms yet: add the executives' names to keywords.yaml when the team confirms them)
+  - {group: Leadership, name: Leadership, category: LINE}
+  # Competitors
+  - {group: Competitor, name: Facebook, category: COMPETITOR, cap: 5}
+  - {group: Competitor, name: WhatsApp, category: COMPETITOR, cap: 5}
+  - {group: Competitor, name: WeChat, category: COMPETITOR, cap: 5}
+  - {group: Competitor, name: Snapchat, category: COMPETITOR, cap: 5}
+  - {group: Competitor, name: Telegram, category: COMPETITOR, cap: 5}
+  - {group: Competitor, name: Instagram, category: COMPETITOR, cap: 5}
+  - {group: Competitor, name: X, category: COMPETITOR, cap: 5}
+  - {group: Competitor, name: Meta, category: COMPETITOR, cap: 5}
+  - {group: Competitor, name: Threads, category: COMPETITOR, cap: 5}
+  - {group: Competitor, name: Google, category: COMPETITOR, cap: 5}
+  - {group: Competitor, name: Other, category: COMPETITOR, cap: 5, description: "Competitors not in the list (for example KakaoTalk)"}
+  # Industry
+  - {group: Industry, name: Social Media, category: INDUSTRY, cap: 5}
+  - {group: Industry, name: Web3, category: INDUSTRY, cap: 5}
+  - {group: Industry, name: Crypto, category: INDUSTRY, cap: 5}
+  - {group: Industry, name: Blockchain, category: INDUSTRY, cap: 5}
+  - {group: Industry, name: NFT, category: INDUSTRY, cap: 5}
+  - {group: Industry, name: Regulation, category: INDUSTRY, cap: 5, description: "Government and regulator news (Komdigi, OJK, Bank Indonesia, KPPU, PDP law)"}
+  - {group: Industry, name: Messenger, category: INDUSTRY, cap: 5}
+  - {group: Industry, name: AI, category: INDUSTRY, cap: 5}
+  - {group: Industry, name: Fintech, category: INDUSTRY, cap: 5, description: "Digital payment, banking"}
+  - {group: Industry, name: General, category: INDUSTRY, cap: 5, description: "Other IT-related service or corporate news"}
+
+# Outlets treated as prominent when choosing which external articles to keep under the cap (matched by name, case-insensitive).
+prominent_media:
+  - Kompas
+  - Detik
+  - CNBC Indonesia
+  - CNN Indonesia
+  - Antara
+  - Tempo
+  - Kontan
+  - Bisnis
+  - Katadata
+  - Liputan6
+  - Tribunnews
+  - Kumparan
+  - Republika
+  - Okezone
+  - Sindonews
+  - DailySocial
+  - Selular
+
+# Indonesian media only. Reject links whose host ends in another country's domain (vietnam.vn, *.it, *.sg ...);
+# `.id`, `.com`, `.co`, `.net`, `.org` and other generic endings pass. Extra hosts to reject go here.
+blocked_hosts:
+  - pasqualepillitteri.it

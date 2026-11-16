@@ -11,11 +11,30 @@ Rules:
 - business_impact = likely effect on LINE Indonesia's business or reputation.
 - recommended_action: PREPARE_RESPONSE only for negative or risky coverage that may need a public/internal response;
   SHARE_INTERNALLY for important items the wider team should see; MONITOR for developing stories; NO_ACTION_REQUIRED otherwise.
-- is_relevant = false if the monitored keyword is only mentioned in passing in an article that is really about something else
-  (e.g. WhatsApp listed as one app among many in a phone review), or if the word is used in another sense
-  (e.g. "line" as an ordinary word, or a different company with a similar name such as the shipping company NYK Line). When in doubt about a direct mention, keep it relevant.
+- is_relevant: for LINE coverage a passing mention of any LINE brand or service still counts as relevant (keep it, with importance LOW),
+  for example LINE MUSIC named inside an entertainment story. For COMPETITOR and INDUSTRY coverage it is false when the keyword is only
+  mentioned in passing in an article that is really about something else (e.g. WhatsApp listed as one app among many in a phone review).
+  Always false when the word is used in another sense (e.g. "line" as an ordinary word, or a different company with a similar name
+  such as the shipping company NYK Line). When in doubt about a direct mention, keep it relevant.
+- topic: only for articles whose Monitoring category is LINE. Pick the single best "Group/Name" from the TOPICS list below,
+  using the article's subject (e.g. quarterly results -> Business/Earnings; hiring -> Business/HR). Use null for every other category.
 """
 
+
+def _line_topics() -> str:
+    """The LINE part of the topic library, as lines of '- Group/Name: description' for the prompt."""
+    import yaml
+    from pathlib import Path
+
+    data = yaml.safe_load((Path(__file__).parents[2] / "seed" / "topics.yaml").read_text(encoding="utf-8"))
+    return "\n".join(
+        f"- {t['group']}/{t['name']}" + (f": {t['description']}" if t.get("description") else "")
+        for t in data["topics"]
+        if t["category"] == "LINE"
+    )
+
+
+ANALYSIS_SYSTEM += "\nTOPICS (for LINE coverage):\n" + _line_topics() + "\n"
 
 BODY_CHARS_PER_ARTICLE = 2500
 

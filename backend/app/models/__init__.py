@@ -9,6 +9,7 @@ from app.models.base import (
 )
 from app.models.report import IngestionRun, Report, SeenItem
 from app.models.source import Keyword, Source
+from app.models.topic import Topic
 from app.models.user import User
 
 __all__ = [
@@ -25,5 +26,6 @@ __all__ = [
     "SeenItem",
     "Sentiment",
     "Source",
+    "Topic",
     "User",
 ]
